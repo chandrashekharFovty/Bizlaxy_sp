@@ -1,0 +1,38 @@
+SihnIn = http://localhost:8080/
+
+Forgot = http://localhost:8080/forgotpassword 
+
+userReg/SignUp = http://localhost:8080/signup
+
+Mobilereg = http://localhost:8080/mobileregister
+
+MobileOtp = http://localhost:8080/mobileotp
+
+Mailreg = http://localhost:8080/emailregister
+
+EmailOtp = http://localhost:8080/emailotp
+
+Profile = http://localhost:8080/profile
+
+Explore = http://localhost:8080/explore
+
+Home = http://localhost:8080/feed
+
+Pitch = http://localhost:8080/pitch
+
+Shop = http://localhost:8080/shop
+
+//  #b49ad6
+
+//bg-gradient-to-br from-[#e0f0ff] via-[#c3b9f7] via-40% via-[#689cf2] to-[#002aee]
+
+
+bg-gradient-to-bl from-[#b3abfa] via-[#7270fd] to-[#0740fd]
+
+
+
+https://biz-b.codeinges.com/auth/register/mobile
+https://biz-b.codeinges.com/auth/register/verifilyotp
+https://biz-b.codeinges.com/auth/register/emailverification
+https://biz-b.codeinges.com/auth/register/signup
+https://biz-b.codeinges.com/auth/login

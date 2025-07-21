@@ -1,0 +1,449 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+     
+    },
+  },
+};
+/************************************************************* */
+// components/Sidebar.js
+import React from 'react';
+
+const Sidebar = ({ navItems, onNavClick, activeNav }) => {
+  return (
+    <aside className="w-60 bg-gray-900 text-white h-screen p-4">
+      <h2 className="text-xl font-bold mb-6">Categories</h2>
+      <ul className="space-y-3">
+        {navItems.map((item) => (
+          <li
+            key={item.id}
+            onClick={() => onNavClick(item.id)}
+            className={`cursor-pointer p-2 rounded ${
+              activeNav === item.id ? 'bg-blue-500' : 'hover:bg-gray-700'
+            }`}
+          >
+            {item.name}
+          </li>
+        ))}
+      </ul>
+    </aside>
+  );
+};
+
+export default Sidebar;
+
+
+
+// components/CardSection.js
+import React from 'react';
+
+const CardSection = ({ cards }) => {
+  return (
+    <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {cards.map((card) => (
+        <div key={card.id} className="bg-white rounded shadow p-4">
+          <h3 className="text-lg font-semibold">{card.title}</h3>
+          <p className="text-gray-600">{card.description}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default CardSection;
+// pages/LandingPage.js
+import React, { useState } from 'react';
+import Sidebar from '../components/Sidebar';
+import CardSection from '../components/CardSection';
+
+const navItems = [
+  { id: 'cats', name: 'Cats' },
+  { id: 'dogs', name: 'Dogs' },
+  { id: 'birds', name: 'Birds' },
+  { id: 'rabbits', name: 'Rabbits' },
+];
+
+const cardData = {
+  cats: [
+    { id: 1, title: 'Persian Cat', description: 'Long-haired and fluffy.' },
+    { id: 2, title: 'Siamese Cat', description: 'Vocal and affectionate.' },
+  ],
+  dogs: [
+    { id: 3, title: 'Labrador', description: 'Friendly and outgoing.' },
+    { id: 4, title: 'German Shepherd', description: 'Loyal and intelligent.' },
+  ],
+  birds: [
+    { id: 5, title: 'Parrot', description: 'Colorful and talkative.' },
+    { id: 6, title: 'Sparrow', description: 'Small and chirpy.' },
+  ],
+  rabbits: [
+    { id: 7, title: 'Angora Rabbit', description: 'Fluffy and calm.' },
+    { id: 8, title: 'Lionhead Rabbit', description: 'Has a mane-like fur.' },
+  ],
+};
+
+const LandingPage = () => {
+  const [activeNav, setActiveNav] = useState('cats');
+
+  return (
+    <div className="flex">
+      <Sidebar navItems={navItems} onNavClick={setActiveNav} activeNav={activeNav} />
+      <main className="flex-1 bg-gray-100 min-h-screen">
+        <h1 className="text-2xl font-bold p-6">Our Lovely {activeNav.charAt(0).toUpperCase() + activeNav.slice(1)}</h1>
+        <CardSection cards={cardData[activeNav]} />
+      </main>
+    </div>
+  );
+};
+
+export default LandingPage;
+
+
+<div className="flex w-[390px] max-w-full items-center gap-5 text-sm text-[#050505] font-normal whitespace-nowrap text-center tracking-[-0.14px] mt-[19px]">
+  {highlightsData.map((item) => (
+    <div key={item.id} className="self-stretch flex flex-col items-center w-[82px] my-auto">
+      <img
+        src={item.HighlightImg}
+        alt={item.title}
+        className="aspect-[1] object-contain w-[83px]"
+      />
+      <div className="text-[#050505] mt-1">{item.title}</div>
+    </div>
+  ))}
+</div>
+
+[
+  {
+    id: "IN",
+    name: "India",
+    dial_code: "+91",
+    flagSvgUrl: "https://flagsapi.com/IN/flat/64.png",
+  },
+  {
+    id: "AF",
+    name: "Afghanistan",
+    dial_code: "+93",
+    flagSvgUrl: "https://flagsapi.com/AF/flat/64.png",
+  },
+  {
+    id: "AL",
+    name: "Albania",
+    dial_code: "+355",
+    flagSvgUrl: "https://flagsapi.com/AL/flat/64.png",
+  },
+  {
+    id: "DZ",
+    name: "Algeria",
+    dial_code: "+213",
+    flagSvgUrl: "https://flagsapi.com/DZ/flat/64.png",
+  },
+  {
+    id: "AD",
+    name: "Andorra",
+    dial_code: "+376",
+    flagSvgUrl: "https://flagsapi.com/AD/flat/64.png",
+  },
+  {
+    id: "AO",
+    name: "Angola",
+    dial_code: "+244",
+    flagSvgUrl: "https://flagsapi.com/AO/flat/64.png",
+  },
+  {
+    id: "AG",
+    name: "Antigua & Barbuda",
+    dial_code: "+1268",
+    flagSvgUrl: "https://flagsapi.com/AG/flat/64.png",
+  },
+  {
+    id: "AR",
+    name: "Argentina",
+    dial_code: "+54",
+    flagSvgUrl: "https://flagsapi.com/AR/flat/64.png",
+  },
+  {
+    id: "AM",
+    name: "Armenia",
+    dial_code: "+374",
+    flagSvgUrl: "https://flagsapi.com/AM/flat/64.png",
+  },
+  {
+    id: "AU",
+    name: "Australia",
+    dial_code: "+61",
+    flagSvgUrl: "https://flagsapi.com/AU/flat/64.png",
+  },
+  {
+    id: "AT",
+    name: "Austria",
+    dial_code: "+43",
+    flagSvgUrl: "https://flagsapi.com/AT/flat/64.png",
+  },
+  {
+    id: "BD",
+    name: "Bangladesh",
+    dial_code: "+880",
+    flagSvgUrl: "https://flagsapi.com/BD/flat/64.png",
+  },
+  {
+    id: "BB",
+    name: "Barbados",
+    dial_code: "+1246",
+    flagSvgUrl: "https://flagsapi.com/BB/flat/64.png",
+  },
+  {
+    id: "BY",
+    name: "Belarus",
+    dial_code: "+375",
+    flagSvgUrl: "https://flagsapi.com/BY/flat/64.png",
+  },
+  {
+    id: "BE",
+    name: "Belgium",
+    dial_code: "+32",
+    flagSvgUrl: "https://flagsapi.com/BE/flat/64.png",
+  },
+  {
+    id: "BZ",
+    name: "Belize",
+    dial_code: "+501",
+    flagSvgUrl: "https://flagsapi.com/BZ/flat/64.png",
+  },
+  {
+    id: "BJ",
+    name: "Benin",
+    dial_code: "+229",
+    flagSvgUrl: "https://flagsapi.com/BJ/flat/64.png",
+  },
+  {
+    id: "BT",
+    name: "Bhutan",
+    dial_code: "+975",
+    flagSvgUrl: "https://flagsapi.com/BT/flat/64.png",
+  },
+  {
+    id: "BO",
+    name: "Bolivia",
+    dial_code: "+591",
+    flagSvgUrl: "https://flagsapi.com/BO/flat/64.png",
+  },
+  {
+    id: "BA",
+    name: "Bosnia & Herzegovina",
+    dial_code: "+387",
+    flagSvgUrl: "https://flagsapi.com/BA/flat/64.png",
+  },
+  {
+    id: "BW",
+    name: "Botswana",
+    dial_code: "+267",
+    flagSvgUrl: "https://flagsapi.com/BW/flat/64.png",
+  },
+  {
+    id: "BR",
+    name: "Brazil",
+    dial_code: "+55",
+    flagSvgUrl: "https://flagsapi.com/BR/flat/64.png",
+  },
+  {
+    id: "CA",
+    name: "Canada",
+    dial_code: "+1",
+    flagSvgUrl: "https://flagsapi.com/CA/flat/64.png",
+  },
+  {
+    id: "QA",
+    name: "Qatar",
+    dial_code: "+974",
+    flagSvgUrl: "https://flagsapi.com/QA/flat/64.png",
+  },
+  {
+    id: "CN",
+    name: "China",
+    dial_code: "+86",
+    flagSvgUrl: "https://flagsapi.com/CN/flat/64.png",
+  },
+  {
+    id: "EG",
+    name: "Egypt",
+    dial_code: "+20",
+    flagSvgUrl: "https://flagsapi.com/EG/flat/64.png",
+  },
+  {
+    id: "FR",
+    name: "France",
+    dial_code: "+33",
+    flagSvgUrl: "https://flagsapi.com/FR/flat/64.png",
+  },
+  {
+    id: "DE",
+    name: "Germany",
+    dial_code: "+49",
+    flagSvgUrl: "https://flagsapi.com/DE/flat/64.png",
+  },
+  {
+    id: "ID",
+    name: "Indonesia",
+    dial_code: "+62",
+    flagSvgUrl: "https://flagsapi.com/ID/flat/64.png",
+  },
+  {
+    id: "JP",
+    name: "Japan",
+    dial_code: "+81",
+    flagSvgUrl: "https://flagsapi.com/JP/flat/64.png",
+  },
+  {
+    id: "KE",
+    name: "Kenya",
+    dial_code: "+254",
+    flagSvgUrl: "https://flagsapi.com/KE/flat/64.png",
+  },
+  {
+    id: "KR",
+    name: "South Korea",
+    dial_code: "+82",
+    flagSvgUrl: "https://flagsapi.com/KR/flat/64.png",
+  },
+  {
+    id: "MX",
+    name: "Mexico",
+    dial_code: "+52",
+    flagSvgUrl: "https://flagsapi.com/MX/flat/64.png",
+  },
+  {
+    id: "MY",
+    name: "Malaysia",
+    dial_code: "+60",
+    flagSvgUrl: "https://flagsapi.com/MY/flat/64.png",
+  },
+  {
+    id: "NG",
+    name: "Nigeria",
+    dial_code: "+234",
+    flagSvgUrl: "https://flagsapi.com/NG/flat/64.png",
+  },
+  {
+    id: "PK",
+    name: "Pakistan",
+    dial_code: "+92",
+    flagSvgUrl: "https://flagsapi.com/PK/flat/64.png",
+  },
+  {
+    id: "PH",
+    name: "Philippines",
+    dial_code: "+63",
+    flagSvgUrl: "https://flagsapi.com/PH/flat/64.png",
+  },
+  {
+    id: "PL",
+    name: "Poland",
+    dial_code: "+48",
+    flagSvgUrl: "https://flagsapi.com/PL/flat/64.png",
+  },
+  {
+    id: "PT",
+    name: "Portugal",
+    dial_code: "+351",
+    flagSvgUrl: "https://flagsapi.com/PT/flat/64.png",
+  },
+  {
+    id: "RU",
+    name: "Russia",
+    dial_code: "+7",
+    flagSvgUrl: "https://flagsapi.com/RU/flat/64.png",
+  },
+  {
+    id: "SA",
+    name: "Saudi Arabia",
+    dial_code: "+966",
+    flagSvgUrl: "https://flagsapi.com/SA/flat/64.png",
+  },
+  {
+    id: "SG",
+    name: "Singapore",
+    dial_code: "+65",
+    flagSvgUrl: "https://flagsapi.com/SG/flat/64.png",
+  },
+  {
+    id: "ZA",
+    name: "South Africa",
+    dial_code: "+27",
+    flagSvgUrl: "https://flagsapi.com/ZA/flat/64.png",
+  },
+  {
+    id: "ES",
+    name: "Spain",
+    dial_code: "+34",
+    flagSvgUrl: "https://flagsapi.com/ES/flat/64.png",
+  },
+  {
+    id: "SE",
+    name: "Sweden",
+    dial_code: "+46",
+    flagSvgUrl: "https://flagsapi.com/SE/flat/64.png",
+  },
+  {
+    id: "CH",
+    name: "Switzerland",
+    dial_code: "+41",
+    flagSvgUrl: "https://flagsapi.com/CH/flat/64.png",
+  },
+  {
+    id: "TH",
+    name: "Thailand",
+    dial_code: "+66",
+    flagSvgUrl: "https://flagsapi.com/TH/flat/64.png",
+  },
+  {
+    id: "TR",
+    name: "Turkey",
+    dial_code: "+90",
+    flagSvgUrl: "https://flagsapi.com/TR/flat/64.png",
+  },
+  {
+    id: "UA",
+    name: "Ukraine",
+    dial_code: "+380",
+    flagSvgUrl: "https://flagsapi.com/UA/flat/64.png",
+  },
+  {
+    id: "GB",
+    name: "United Kingdom",
+    dial_code: "+44",
+    flagSvgUrl: "https://flagsapi.com/GB/flat/64.png",
+  },
+  {
+    id: "US",
+    name: "United States",
+    dial_code: "+1",
+    flagSvgUrl: "https://flagsapi.com/US/flat/64.png",
+  },
+];

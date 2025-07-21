@@ -1,0 +1,31 @@
+.rmsc {
+  --rmsc-main: transparent !important;
+  --rmsc-border: transparent !important;
+  --rmsc-h: 50px !important;
+  --rmsc-selected: transparent !important;
+}
+
+.rmsc * {
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.rmsc .gray {
+  color: black !important;
+}
+.rmsc .dropdown-container {
+  border-color: transparent !important;
+}
+
+.rmsc .dropdown-container[aria-disabled="true"]:focus-within {
+  border-color: transparent !important;
+}
+
+.rmsc .dropdown-container:focus-within {
+  border-color: transparent !important;
+}
+
+.dropdown-heading-dropdown-arrow,.gray,svg{
+  -webkit-text-stroke-color: #338AF3 !important;
+  -webkit-text-stroke: #338AF3 !important;
+}

@@ -1,0 +1,225 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Poppins:ital,wght@0,100;0,200;...;1,900&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  font-family: poppins;
+}
+
+.logo {
+  font-family: lexend;
+}
+#logo {
+  font-family: lexend;
+}
+/*gradient of background coor for all*/
+@layer utilities {
+  .theme-bg {
+    @apply bg-gradient-to-br from-[#ebdeff] via-[#4470ff] to-[#2505dd];
+  }
+.dark-color{
+  background-color: #131313; 
+  color:white
+}
+  .glass-bg {
+    @apply backdrop-blur-[50px] bg-white/10;
+  }
+   .glass-bg-dark{
+    @apply backdrop-blur-[50px] bg-black/10;
+  }
+  .glass-bg-light{
+  
+    @apply backdrop-blur-[50px] bg-white/10;
+  }
+
+  .purple-circle {
+    @apply w-[90%] h-[290px] bg-[#c08bec] rounded-full absolute;
+    top: -10px;
+    left: 33%;
+  }
+
+  .glass-card-login {
+    @apply w-[444px] h-[415px] rounded-3xl border-2 border-[#d5d0f1] bg-gradient-to-br from-white/10 via-white/10 to-white/10;
+  }
+  .glass-card-signup {
+    @apply max-w-screen-lg p-8 max-h-screen flex justify-center items-center bg-transparent text-[#FFFF] rounded-3xl border-2 border-[#d5d0f1] bg-gradient-to-br from-white/10 via-white/10 to-white/10;
+  }
+  .glass-card-short {
+    @apply w-[444px] h-[300px] rounded-3xl border-2 border-[#d5d0f1] bg-gradient-to-br from-white/10 via-white/10 to-white/10;
+  }
+  .glass-card-phone {
+    @apply w-[444px] h-[330px] rounded-3xl border-2 border-[#d5d0f1] bg-gradient-to-br from-white/10 via-white/10 to-white/10;
+  }
+}
+
+/* Shake animation */
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  80% {
+    transform: translateX(5px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-8px);
+  }
+  40%,
+  60% {
+    transform: translateX(8px);
+  }
+}
+
+.animationsubmit {
+  animation: shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+.custom-bg {
+  background-position: fixed;
+  background-size: cover;
+  background-image: url(../public/slide-bg.svg);
+}
+
+sidebar-text {
+  font-size: 16px;
+  color: #0000;
+  font-weight: 500;
+}
+
+sidebar-text::before {
+  font-size: 16px;
+  color: #5976d6;
+  font-weight: 500;
+}
+
+.bg-blur {
+  backdrop-filter: url(common-filters.svg#filter);
+}
+
+/* Hide scrollbar but allow scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Base styles */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  appearance: none; /* Remove default checkbox */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  /* margin-right: 4px; */
+  position: relative;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+/* Checked state */
+.custom-checkbox input[type="checkbox"]:checked {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.custom-checkbox input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  left: 1.5px;
+  top: -2px;
+}
+
+/* Optional: Hover/focus effect */
+.custom-checkbox input[type="checkbox"]:hover {
+  border-color: #fff;
+}
+
+/* Make dropdown glass-style with backdrop blur and shadow */
+/* Apply glass + sky background dropdown style */
+.glass-dropdown {
+  @apply absolute left-0 top-[56px] w-full z-50 rounded-lg backdrop-blur-md bg-sky-500/90 text-white border border-white/30 shadow-xl;
+
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* Back button styled inside the dropdown */
+.glass-dropdown::before {
+  content: "← Back";
+  display: block;
+  padding: 12px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+}
+
+/* Style each country item */
+.glass-dropdown .country {
+  @apply px-3 py-2 hover:bg-white/70 cursor-pointer;
+}
+
+.inputBox {
+  @apply placeholder-white placeholder:font-normal placeholder:opacity-75 bg-transparent text-white font-medium border rounded-xl px-4 text-sm w-full h-[46px] outline-[#BED6FF];
+}
+
+.validInputBox {
+  @apply border-[#BED6FF];
+}
+.invalidInputBox {
+  @apply border-[#000] border-2;
+}
+
+.inputBoxError {
+  @apply text-[#000] text-[12px] m-1;
+}
+.passwordStrength {
+  @apply text-[12px] font-medium text-[#000];
+}
+.validInputBoxOtp {
+  @apply outline-[#BED6FF] text-center placeholder-white bg-transparent text-white font-medium border-2 rounded-xl px-4 text-sm w-[14%] h-[56px];
+}
+
+.phoneDialInput {
+  @layer base {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+  }
+}
+
+.btn-gradient {
+  @apply bg-gradient-to-br from-[#1C4BC4] via-[#4470ff] to-[#9645FF];
+}
+.border-gradient {
+  @apply border-2 border-s-[#52EAEA] border-e-[#F36FFF] border-t-[#338AF3] border-b-[#1C4BC4] border-l-[#1cb7ff] border-r-[#b636e9];
+}
+
