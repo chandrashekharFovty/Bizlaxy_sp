@@ -396,6 +396,104 @@ export function PostList() {
         },
       ],
     },
+      {
+      user: {
+        name: "Brian Turner",
+        avatar:
+          "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/207cecdea9d621d7e8dae4481e717853eedb0dda?placeholderIfAbsent=true",
+        timeAgo: "1 hour ago",
+      },
+      content: {
+        title:
+          "Turn your idea into a thriving business—start your journey with us today! 💡🚀",
+        titleLimit: 30, // 🔹 Set title character limit here
+        description:
+          "“From a spark of an idea to building something real — every step, sprint, and setback has shaped this journey. Here’s to the sleepless nights, early wins, and relentless belief in something greater. 🔗 #FounderLife #StartupJourney",
+        descpLimit: 50, // 🔹 Set description character limit here
+        documentUrl:
+          "http://dt.pepperdine.edu/courses/greatbooks_v/gbv-15/66697602-The-Ramayana-R-K-Narayan.pdf",
+        documentName: "Ramayana.pdf",
+      },
+      engagement: {
+        likes: formatNumber("1100"),
+        // comments: formatNumber("0"),
+        shares: formatNumber("6"),
+      },
+      showFollowButton: true,
+      showMoreOptions: true,
+      //isFileImage: true,
+      //isMediaContent: true,
+      commentsList: [
+        {
+          id: 1,
+          comments: [
+            {
+              id: 1,
+              name:"im_gr",
+              text: "Nice post!",
+              likes: 10,
+              replies: [{ replyId: 1,replyname:"Brian Turner", replyText: "Thanks 😊", likes: 2 }],
+            },
+            {
+              id: 2,
+              name:"organic__ai",
+              text: "Great insights!",
+              likes: 3,
+              replies: [],
+            },
+          ],
+        },
+      ],
+    },
+      {
+      user: {
+        name: "Brian Turner",
+        avatar:
+          "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/207cecdea9d621d7e8dae4481e717853eedb0dda?placeholderIfAbsent=true",
+        timeAgo: "1 hour ago",
+      },
+      content: {
+        title:
+          "Turn your idea into a thriving business—start your journey with us today! 💡🚀",
+        titleLimit: 30, // 🔹 Set title character limit here
+        description:
+          "“From a spark of an idea to building something real — every step, sprint, and setback has shaped this journey. Here’s to the sleepless nights, early wins, and relentless belief in something greater. 🔗 #FounderLife #StartupJourney",
+        descpLimit: 50, // 🔹 Set description character limit here
+        documentUrl:
+          "http://dt.pepperdine.edu/courses/greatbooks_v/gbv-15/66697602-The-Ramayana-R-K-Narayan.pdf",
+        documentName: "Ramayana.pdf",
+      },
+      engagement: {
+        likes: formatNumber("1100"),
+        // comments: formatNumber("0"),
+        shares: formatNumber("6"),
+      },
+      showFollowButton: true,
+      showMoreOptions: true,
+      //isFileImage: true,
+      //isMediaContent: true,
+      commentsList: [
+        {
+          id: 1,
+          comments: [
+            {
+              id: 1,
+              name:"im_gr",
+              text: "Nice post!",
+              likes: 10,
+              replies: [{ replyId: 1,replyname:"Brian Turner", replyText: "Thanks 😊", likes: 2 }],
+            },
+            {
+              id: 2,
+              name:"organic__ai",
+              text: "Great insights!",
+              likes: 3,
+              replies: [],
+            },
+          ],
+        },
+      ],
+    },
   ];
 
   const suggestedContent = {
@@ -449,7 +547,7 @@ export function PostList() {
 
         {viewPre && (
           <div className="flex  flex-col gap-6 max-md:w-screen max-w-[800px]">
-            {posts.slice(0, 4).map((post, index) => (
+            {posts.slice(0,14).map((post, index) => (
               <Post key={index} {...post} />
             ))}
           </div>
@@ -464,7 +562,7 @@ export function PostList() {
 
         {viewMore && (
           <div className=" flex dark:text-white  flex-col gap-6 w-full max-w-[700px]">
-            {posts.slice(0, 6).map((post, index) => (
+            {posts.slice(0,14).map((post, index) => (
               <Post key={index} {...post} />
             ))}
           </div>

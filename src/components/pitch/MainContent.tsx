@@ -16,7 +16,7 @@ import { FiSend } from "react-icons/fi";
 import { FollowButton, FollowButtonCard } from "../ui/FollowButton";
 import { truncate } from "fs/promises";
 import { BiCollapse } from "react-icons/bi";
-import { IoMdMore } from "react-icons/io";
+import { IoIosMore, IoMdMore } from "react-icons/io";
 
 type Props = {
   onNavigate: (view: "main" | "details" | "faq" | "analysis") => void;
@@ -308,7 +308,7 @@ export default function MainContent({ onNavigate }: Props) {
   }
   return (
     <>
-      <div className="snap-y snap-mandatory max-md:w-screen max-md:h-[90vh] h-[95vh] w-[32vw] max-md:my-0 my-5 rounded-xl max-md:rounded-none overflow-y-scroll scrollbar-hide">
+      <div className="snap-y snap-mandatory max-md:w-screen max-md:h-[90vh] h-[95vh] w-[30vw] max-md:my-0 my-5 rounded-xl max-md:rounded-none overflow-y-scroll scrollbar-hide">
         {mediaList.map((media, idx) => {
           const liked = likedIds.includes(media.id);
           const isAnimating = animatingLikeIdx === idx;
@@ -349,8 +349,8 @@ export default function MainContent({ onNavigate }: Props) {
                   {isFullscreen ? <BiCollapse size={30} /> : <ExpandIcon />}
                 </div>
               </div>
-              <div className="absolute w-full bottom-0 max-md:bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent py-2 px-5">
-                <div className="flex items-center justify-between mb-1">
+              <div className="absolute w-full bottom-0 max-md:bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent ">
+                <div className="flex items-center justify-between ">
                   {/* <div className="flex items-center gap-2">
                 <Link to="/profile" className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full cursor-pointer"><img src={media.profile} alt={media.user.name} className="w-full h-full rounded-full"/></div>
@@ -362,21 +362,22 @@ export default function MainContent({ onNavigate }: Props) {
                 <FollowButtonCard/>
               </div> */}
                 </div>
-                <div className="pr-8">
-                  <h3 className="text-lg font-bold text-white mb-1">
+                <div className="pr-8 ">
+                  <h3 className="text-lg pl-3 font-bold text-white mb-1">
                     {media.title}
                   </h3>
-                  <p className="text-sm text-gray-300 mb-2 line-clamp-3 max-h-16 overflow-y-auto scrollbar-hide">
+                  <p className="text-sm pl-3 w-[350px] text-gray-300 mb-4 line-clamp-3 max-h-16 overflow-y-auto scrollbar-hide">
                     {media.description}
                   </p>
 
-                  <button
+            
+                </div>
+                      <button
                     onClick={() => onNavigate("details")}
-                    className="cursor-pointer max-md:w-full w-full rounded text-sm text-white text-center px-5"
+                    className="cursor-pointer h-8 w-full bg-black/40 max-md:w-full w-full rounded text-sm text-white text-center "
                   >
                     More Details
                   </button>
-                </div>
               </div>
               {/* CENTER ANIMATED THUMB */}
               {isAnimating && (
@@ -390,7 +391,7 @@ export default function MainContent({ onNavigate }: Props) {
                   />
                 </div>
               )}
-         <div className="absolute flex flex-col right-4 top-3/4 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
+         <div className="absolute flex flex-col right-4 top-3/4 mt-14 max-md:pb-20 -translate-y-3/4 space-y-2 z-10">
   {/* LIKE BUTTON */}
   <div
     onClick={() => toggleLike(media.id)}
@@ -449,7 +450,7 @@ export default function MainContent({ onNavigate }: Props) {
     className="cursor-pointer flex flex-col items-center"
   >
     <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
-    <IoMdMore
+   <IoIosMore
         className="text-xl"
       />
     </div>

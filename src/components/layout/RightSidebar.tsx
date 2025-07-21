@@ -198,7 +198,7 @@ useEffect(() => {
         <div className="dark:dark-color overflow-hidden dark:text-white fixed w-[370px] h-screen scrollbar-hide bg-white flex flex-col items-stretch px-3">
           <div
             style={{ position: "relative", width: 300 }}
-            className="mt-3 dark:dark-color grid w-[370px] h-[40px] cursor-default grid-cols-1 bg-white text-left rounded-3xl border-[2px] border-solid border-[#a89bfc] font-normal outline-white focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            className="mt-3 dark:dark-color grid w-[370px] h-[40px] cursor-default grid-cols-1 bg-white text-left rounded-3xl border-[2px] border-solid border-gradient font-normal outline-white focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
           >
             <div className="flex flex-row items-center ">
               <SearchIcon className="text-gray-400 ml-2 w-5 h-5" />
@@ -421,7 +421,7 @@ useEffect(() => {
             </div>
           </div>
 
-          <div className="cursor-pointer btn-gradient text-white self-stretch min-h-7 w-[114px] h-[27px] mt-[4px] text-center rounded-[5px] ">
+          <div className="cursor-pointer btn-gradient text-white self-stretch min-h-7 w-[114px] h-[27px] pt-1 mt-[4px] text-center rounded-[5px] ">
             Follow
           </div>
         </div>

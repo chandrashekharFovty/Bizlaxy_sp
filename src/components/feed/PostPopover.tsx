@@ -75,7 +75,7 @@ export function PostModal() {
 
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <DialogPanel className="w-full max-w-md mx-auto  bg-white rounded-2xl border shadow-xl overflow-hidden">
-            <div className="dark:dark-color  bg-white py-6 px-0">
+            <div className="dark:dark-color  bg-white py-1 px-0">
               <div className="dark:dark-color  text-sm text-[#050505]">
                 {actions.map(({ icon, label, msg, danger }, i) => (
                   <div

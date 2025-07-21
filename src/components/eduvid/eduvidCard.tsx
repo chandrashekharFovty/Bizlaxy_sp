@@ -338,14 +338,14 @@ export default function MainContent() {
                       <img src="/whiteOfficialIcon.png" alt="✔️" />
                     </span>
                   )}
-                  <FollowButtonCard />
+                  <FollowButtonCard  />
                 </div>
               </div>
               <div className="mb-5 pb-5 pr-8">
                 {/* <h3 className="text-lg font-bold text-white mb-1">
                   {media.title}
                 </h3> */}
-                <p className="text-sm text-gray-300 mb-2 line-clamp-3 max-h-16 overflow-y-auto scrollbar-hide">
+                <p className="text-sm text-gray-300 w-[350px] mb-2 line-clamp-3 max-h-16 overflow-y-auto scrollbar-hide">
                   {media.description}
                 </p>
                 {/* <Link to="/pitch-details" className="flex justify-center">
@@ -366,7 +366,7 @@ export default function MainContent() {
             )}
 
 
-           <div className="absolute flex flex-col right-4 top-3/4 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
+           <div className="absolute flex flex-col right-4 top-3/4 mt-12 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
        {/* LIKE BUTTON */}
        <div
          onClick={() => toggleLike(media.id)}

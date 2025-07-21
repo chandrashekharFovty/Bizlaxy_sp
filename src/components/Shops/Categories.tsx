@@ -9,7 +9,39 @@ import { Arrow } from "@radix-ui/react-context-menu";
 import { ArrowLeft, Filter, SearchIcon } from "lucide-react";
 import filter from "../../../public/filter.webp"
 
+const products = [
+  "Apple iPhone",
+  "Samsung Galaxy",
+  "Google Pixel",
+  "OnePlus Nord",
+  "Sony Xperia",
+  "Nokia Lumia",
+  "Shirt", "Pants", "Shoes", "Socks", "Hat", "Dress", 
+];
+
 const Category = () => {
+    const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+
+    if (value.length > 0) {
+      const filtered = products.filter((product) =>
+        product.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filtered);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSelect = (item) => {
+    setQuery(item);
+    setSuggestions([]);
+  };
+
   const navigate=useNavigate()
   return (
     <div className="flex dark:dark-color">
@@ -32,9 +64,24 @@ const Category = () => {
       <SearchIcon className="w-4 h-4 text-gray-500 mr-2" />
       <input
         type="text"
-        placeholder="Search"
+        placeholder="Search account here...."
+        value={query}
+        onChange={handleChange}
         className="flex-grow bg-transparent outline-none text-sm"
       />
+      {suggestions.length > 0 && (
+        <ul className="absolute z-10 bg-white border border-gray-200 h-60 overflow-y-auto scrollbar-hide mt-[300px] w-[70%] rounded shadow">
+          {suggestions.map((item, index) => (
+            <li
+              key={index}
+              onClick={() => handleSelect(item)}
+              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      )}
      <button 
   onClick={() => navigate("/filter")}
   className="p-2 lg:hidden rounded-xl bg-blue-600 text-white">
@@ -45,7 +92,7 @@ const Category = () => {
 
   {/* Right Section: Shop Profile */}
   <Link to="/shopprofile" className="ml-4 flex-shrink-0">
-    <div className="w-14 h-14  rounded-full overflow-hidden border border-gray-300 flex items-center justify-center cursor-pointer">
+    <div className="w-12 h-12  rounded-full overflow-hidden border border-gray-300 flex items-center justify-center cursor-pointer">
       <img src="/isShop.png" alt="Shop" className="w-6 h-6" />
     </div>
   </Link>
@@ -151,7 +198,7 @@ export function Filters() {
       minQty,
       maxQty,
     });
-    // ✅ Use navigate or props callback here if needed
+    //  Use navigate or props callback here if needed
   };
 
   return (
@@ -198,12 +245,12 @@ export function Filters() {
                   className="hidden"
                 />
                 <span
-                  className={`w-5 h-5 inline-block mr-2 border rounded ${
+                  className={`text-center w-5 h-5 inline-block mr-2 border rounded ${
                     selectedOptions.includes(option)
-                      ? "bg-gradient-to-l from-blue-500 to-purple-500"
-                      : "bg-white"
+                      ? "bg-gradient-to-l from-blue-500 to-purple-500 text-white"
+                      : "bg-white text-white"
                   }`}
-                ></span>
+                >✓</span>
                 {option}
               </label>
             ))}

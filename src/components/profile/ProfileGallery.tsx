@@ -16,7 +16,7 @@ interface ProfileGalleryProps {
 
 const ProfileGallery: React.FC<ProfileGalleryProps> = ({ items, onItemClick }) => {
   return (
-    <div className="grid grid-cols-3 md:grid-cols-5  [grid-auto-rows:-10px] dark:dark-color">
+    <div className="grid grid-cols-3 md:grid-cols-4  [grid-auto-rows:-10px] dark:dark-color">
       {items.map((item) => (
         <div
           key={item.id}

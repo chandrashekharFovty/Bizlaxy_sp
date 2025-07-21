@@ -19,7 +19,7 @@ export const FollowButtonCard: React.FC = () => {
   return (
     <button
       onClick={() => setIsFollowing(!isFollowing)}
-      className={`px-1 py-2 text-xs font-mediam ${
+      className={`px-1 text-xs font-mediam border border-white h-6 w-16 ml-2 ${
         isFollowing ? "text-white " : "text-white"
       }`}
     >

@@ -20,7 +20,7 @@ const Homepage = () => {
           <Header />
         </div>
 
-        <div className="flex flex-1">
+        <div className="flex flex-1 dark:dark-color">
           {/* Sidebar */}
           <aside className="max-md:hidden  lg:block w-[240px] flex-shrink-0">
             <Sidebar />

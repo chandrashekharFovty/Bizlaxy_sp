@@ -9,7 +9,17 @@
 
 * {
   font-family: poppins;
+ 
 }
+/* body {
+  background-color: #ffffff; 
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #131313; 
+  }
+} */
 
 .logo {
   font-family: lexend;
@@ -217,9 +227,13 @@ sidebar-text::before {
 }
 
 .btn-gradient {
-  @apply bg-gradient-to-br from-[#1C4BC4] via-[#4470ff] to-[#9645FF];
+  @apply bg-gradient-to-l from-[#9645FF] to-[#1C4BC3] ;
 }
 .border-gradient {
   @apply border-2 border-s-[#52EAEA] border-e-[#F36FFF] border-t-[#338AF3] border-b-[#1C4BC4] border-l-[#1cb7ff] border-r-[#b636e9];
 }
 
+
+.border-gradient-buttons {
+  @apply border-2 border-s-[#52EAEA] border-e-[#F36FFF] border-t-[#338AF3] border-b-[#1C4BC4] border-l-[#1cb7ff] border-r-[#b636e9];
+}

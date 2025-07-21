@@ -173,7 +173,7 @@ const Sidebar: React.FC = () => {
           Bizlaxy
         </Link>
       </div>
-      <div className="max-md:hidden dark:text-gray-300 z-10 w-[220px] max-md:mt-[8px] ml-5 text-[16px] flex flex-col gap-1 pt-3">
+      <div className="max-md:hidden dark:text-gray-300 z-10 w-[220px] mt-6 max-md:mt-[8px] ml-5 text-[16px] flex flex-col pt-3">
         <Link to="/feed" className={linkClass("/feed")}>
           <div className="flex gap-4 items-center w-[220px] h-[48px] cursor-pointer">
             <img
