@@ -81,6 +81,7 @@ import { Filter } from "lucide-react";
 import Wallet, { AddMoney, Receipt } from "./components/MoreSettingMobile/Wallet";
 import ProfilePost from "./components/profile/ProfilePost";
 import MediaUpload from "./components/addManagement/MediaUpload";
+import PitchDetails from "./components/pitch/PitchDetails";
 
 
 const appRouter = createBrowserRouter([
@@ -177,6 +178,8 @@ const appRouter = createBrowserRouter([
   { path: "/receipts", element: <PrivateRoute><Receipt/></PrivateRoute> },
    { path:"/profile/post/:id", element:<PrivateRoute><ProfilePost/></PrivateRoute>},
    { path:"/addmoney", element:<PrivateRoute><AddMoney/></PrivateRoute>},
+   { path:"/detials", element:<PrivateRoute><PitchDetails/></PrivateRoute>},
+
 
    
 

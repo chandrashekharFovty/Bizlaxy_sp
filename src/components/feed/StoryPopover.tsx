@@ -22,7 +22,7 @@ const StoryPopover = () => {
         className="cursor-pointer justify-end text-white"
       />
       {open && (
-        <div className="dark:dark-color absolute -ml-[330px] mt-[300px] bg-gray-100 border rounded-xl shadow-md z-10 w-[300px] h-[159px] text-sm">
+        <div className="dark:dark-color absolute -ml-[260px] mt-[200px] bg-gray-100 border rounded-xl shadow-md z-10 w-[300px] h-[159px] text-sm">
           <div
             className="pl-10 border-b-2"
             onClick={() => showToast("Muted the creator")}

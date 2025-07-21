@@ -32,9 +32,9 @@ export function SuggestedContent({ title, items }: SuggestedContentProps) {
                   src={item.image}
                   className="absolute h-full w-full object-cover inset-0 border-transparent rounded-xl"
                 />
-                <div className="relative pt-[200px] pb-[32px] px-[17px] rounded-[0px_0px_12px_12px] max-md:pr-5 max-md:pt-[80px]">
+                {/* <div className="relative pt-[200px] pb-[32px] px-[17px] rounded-[0px_0px_12px_12px] max-md:pr-5 max-md:pt-[80px]">
                   {item.title}
-                </div>
+                </div> */}
               </div>
             </div>
     

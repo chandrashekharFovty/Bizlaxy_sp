@@ -16,6 +16,7 @@ import { FiSend } from "react-icons/fi";
 import { FollowButton, FollowButtonCard } from "../ui/FollowButton";
 import { truncate } from "fs/promises";
 import { BiCollapse } from "react-icons/bi";
+import { IoMdMore } from "react-icons/io";
 
 type Props = {
   onNavigate: (view: "main" | "details" | "faq" | "analysis") => void;
@@ -327,11 +328,11 @@ export default function MainContent({ onNavigate }: Props) {
                 <video
                   id={`video-${idx}`}
                   src={media.src}
-                  controlsList="nodownload "
-                  controls
-                  autoPlay
-                  muted
-                  loop
+                  // controlsList="nodownload "
+                  // controls
+                  // autoPlay
+                  // muted
+                  // loop
                   onClick={() => handleVideoToggle(idx)}
                   className="absolute inset-0 w-full h-full object-cover cursor-pointer rounded-xl max-md:rounded-none"
                 />
@@ -348,7 +349,7 @@ export default function MainContent({ onNavigate }: Props) {
                   {isFullscreen ? <BiCollapse size={30} /> : <ExpandIcon />}
                 </div>
               </div>
-              <div className="absolute w-full bottom-14 max-md:bottom-14 bg-gradient-to-t from-black/90 via-black/40 to-transparent py-2 px-5">
+              <div className="absolute w-full bottom-0 max-md:bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent py-2 px-5">
                 <div className="flex items-center justify-between mb-1">
                   {/* <div className="flex items-center gap-2">
                 <Link to="/profile" className="flex items-center gap-2">
@@ -389,56 +390,72 @@ export default function MainContent({ onNavigate }: Props) {
                   />
                 </div>
               )}
-              <div className="absolute flex flex-col gap-3 right-4 top-3/4 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
-                {/* RIGHT-SIDE LIKE BUTTON */}
-                <div
-                  onClick={() => toggleLike(media.id)}
-                  className="cursor-pointer"
-                >
-                  {liked ? (
-                    <FaThumbsUp size={32} className="text-white mb-2" />
-                  ) : (
-                    <FaRegThumbsUp size={32} className="text-white mb-2" />
-                  )}
-                  <p className="text-center text-sm">
-                    {formatNumber(media.likes)}
-                  </p>
-                </div>
+         <div className="absolute flex flex-col right-4 top-3/4 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
+  {/* LIKE BUTTON */}
+  <div
+    onClick={() => toggleLike(media.id)}
+    className="cursor-pointer flex flex-col items-center"
+  >
+ <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
+  {liked ? (
+    <img src="/LikePitch.png" alt="Like" className="w-5 h-5" />
+  ) : (
+    <FaThumbsUp className="w-5 h-5 text-white" />
+  )}
+</div>
 
-                <div
-                  onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                  className="cursor-pointer text-white"
-                >
-                  <span>
-                    <FaRegComment size={36} className="mb-2" />
-                  </span>
-                  <p className="text-center text-sm">
-                    {formatNumber(media.comments.length)}
-                  </p>
-                </div>
+    <p className="text-center text-sm text-white">
+      {formatNumber(media.likes)}
+    </p>
+  </div>
 
-                <div
-                  onClick={() => alert("Share dialog opens here")}
-                  className="cursor-pointer dark:text-white text-white"
-                >
-                  <span>
-                    {" "}
-                    <FaShare size={36} className="mb-2" />
-                  </span>
-                  <p className="text-center text-sm">
-                    {formatNumber(media.shares)}
-                  </p>
-                </div>
-                <div
-                  onClick={() => setShowMoreOptions(idx)}
-                  className="cursor-pointer dark:text-white text-white"
-                >
-                  <span>
-                    {" "}
-                    <Ellipsis size={36} className="mb-2" />
-                  </span>
-                </div>
-              </div>
+  {/* COMMENT BUTTON */}
+  <div
+    onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+    className="cursor-pointer flex flex-col items-center"
+  >
+    <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
+      <img
+        src="/CommentsPitch.png"
+        alt="Comment"
+        className="w-5 h-5"
+      />
+    </div>
+    <p className="text-center text-sm text-white">
+      {formatNumber(media.comments.length)}
+    </p>
+  </div>
+
+  {/* SHARE BUTTON */}
+  <div
+    onClick={() => alert("Share dialog opens here")}
+    className="cursor-pointer flex flex-col items-center"
+  >
+    <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
+      <img
+        src="/SendPitch.png"
+        alt="Share"
+        className="w-5 h-5"
+      />
+    </div>
+    <p className="text-center text-sm text-white">
+      {formatNumber(media.shares)}
+    </p>
+  </div>
+
+  {/* MORE OPTIONS BUTTON */}
+  <div
+    onClick={() => setShowMoreOptions(idx)}
+    className="cursor-pointer flex flex-col items-center"
+  >
+    <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
+    <IoMdMore
+        className="text-xl"
+      />
+    </div>
+  </div>
+</div>
+
               {/* Moving pitch card when tray opens */}
               {/* <div
               className={`absolute inset-0 transition-transform duration-1000 ease-out ${

@@ -4,13 +4,13 @@ import React from "react";
 const AccountOption = ({ id, title, desc, selected, onClick }) => {
   return (
     <div
-      className={`border-2 w-full h-24 max-md:h-20 px-8 max-md:px-4 py-4 max-md:py-1 bg-[#eef4fd] rounded-[12px] cursor-pointer transition duration-200 ${
+      className={`border-2 w-full h-20 max-md:h-20 px-8 max-md:px-4 py-4 max-md:py-1 bg-[#eef4fd] rounded-[12px] cursor-pointer transition duration-200 ${
         selected ? "border-gradient" : "border-[#BED6FF]"
       }`}
       onClick={onClick}
     >
       <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <h4 className="font-bold text-xl max-md:text-sm">{title}</h4>
           <span className="hidden">{id}</span>
           <p className="text-sm font-normal text-gray-500 max-md:text-xs">{desc}</p>

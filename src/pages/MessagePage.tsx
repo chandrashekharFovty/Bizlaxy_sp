@@ -14,6 +14,8 @@ import { GrGallery } from "react-icons/gr";
 import { RiContactsFill } from "react-icons/ri";
 import Sidebar, { Footer } from "../components/layout/Sidebar"
 import { BsPinAngleFill } from "react-icons/bs";
+import { ShareIcon } from "lucide-react";
+import { IoIosSend } from "react-icons/io";
 
 // Initial chat data
 const initialChatUsers = [
@@ -68,6 +70,7 @@ const initialChatUsers = [
     lastSeen: "10m ago",
     preview: "Let's meet at 5pm tomorrow.",
     avatar: "https://i.pravatar.cc/40?img=3",
+    members:[1,2,3],
     messages: [
       {
         sender: "Sarah Connor",
@@ -252,6 +255,8 @@ const initialChatUsers = [
 ];
 
 
+
+
 const MessagePage = () => {
    
   const [chats, setChats] = useState(initialChatUsers);
@@ -379,10 +384,10 @@ const MessagePage = () => {
     setShowPopup(false);
   };
 
-  const handleDeleteRequests = () => {
-    //filter out 'Requests' chats
-    setChats((prev) => prev.filter((chat) => chat.type !== "Requests"));
-  };
+  // const handleDeleteRequests = () => {
+  //   //filter out 'Requests' chats
+  //   setChats((prev) => prev.filter((chat) => chat.type !== "Requests"));
+  // };
 
   return (
      <>
@@ -523,7 +528,7 @@ const MessagePage = () => {
               }
             }
           }}
-          className="ml-2 text-xs px-2 py-1 rounded-full bg-white"
+          className="ml-2 text-xs px-1 py-1 rounded-full bg-blue-600"
         >
           {pinnedUserIds.includes(user.id) ? <BsPinAngleFill /> : ""}
         </button>
@@ -535,418 +540,419 @@ const MessagePage = () => {
           </div>
 
           {/* Chat Section */}
-          <div
-            ref={chatSectionRef}
-            className="dark:dark-color xl:w-[870px]  max-lg:w-[500px] flex-1 flex flex-col bg-gray-50 mb-3"
+      <div
+  ref={chatSectionRef}
+  className="dark:dark-color xl:w-[870px] max-lg:w-[500px] flex-1 flex flex-col bg-gray-50 mb-3"
+>
+  {selectedUser ? (
+    <>
+      {/* === Header === */}
+      <div className="dark:dark-color max-md:w-screen max-lg:w-screen w-full flex justify-between items-center p-4 border-b bg-white">
+        <div className="flex items-center gap-3">
+          <Link
+            to="/message"
+            className="dark:text-white lg:hidden flex items-center font-semibold text-black dark:text-black py-4 px-4"
           >
-            {/* Header */}
-            <div className="dark:dark-color max-md:w-screen max-lg:w-screen w-full flex justify-between items-center p-4 border-b bg-white">
-              <div className="flex items-center gap-3">
-                <Link
-                  to="/message"
-                  className="dark:text-white lg:hidden flex items-center font-semibold text-black dark:text-black py-4 px-4"
-                >
-                  <MdExpandLess className="transform rotate-[-90deg] text-2xl" />
-                </Link>
-                <img
-                  src={
-                    selectedUser
-                      ? selectedUser.avatar
-                      : "https://i.pravatar.cc/40"
-                  }
-                  alt=""
-                  className="rounded-full w-10 h-10"
-                />
-                <div>
-                  <h3 className="font-semibold">
-                    {selectedUser ? selectedUser.name : "Select a chat"}
-                  </h3>
-                  <p className="text-xs text-gray-500">
-                    {selectedUser ? `Last seen ${selectedUser.lastSeen}` : ""}
-                  </p>
-                </div>
-              </div>
-              <div className="space-x-3">
-                <button
-                  onClick={() =>
-                    navigate("/videocall", { state: { user: selectedUser } })
-                  }
-                >
-                 <FaPhoneAlt className="text-2xl" />
-                </button>
-                <button
-                  onClick={() =>
-                    navigate("/videocall", { state: { user: selectedUser } })
-                  }
-                >
-                <FaVideo className="text-2xl"/>
-                </button>
-
-                <button onClick={() => setShowOptions(!showOptions)} className="text-3xl">⋮</button>
-                {showOptions && (
-                  <div className="dark:dark-color absolute right-4 top-14 bg-white border rounded shadow w-46 z-50">
-                    <button
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      onClick={() => {
-                        console.log("View Profile clicked");
-                        setShowOptions(false);
-                      }}
-                    >
-                      Label chat
-                    </button>
-                    <button
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      onClick={() => {
-                        console.log("View Profile clicked");
-                        setShowOptions(false);
-                      }}
-                    >
-                      View Contact
-                    </button>
-
-                    <input
-                      type="file"
-                      id="mediaInput"
-                      className="hidden"
-                      multiple
-                      accept="image/*,application/pdf"
-                    />
-
-                    <button
-                      onClick={() => {
-                        document.getElementById("mediaInput").click();
-                        setShowOptions(false);
-                      }}
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    >
-                      Media, Links and docs
-                    </button>
-
-                    <button
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      onClick={() => {
-                        console.log("View Profile clicked");
-                        setShowOptions(false);
-                      }}
-                    >
-                      Search
-                    </button>
-
-                    <button
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      onClick={() => {
-                        console.log("View Profile clicked");
-                        setShowOptions(false);
-                      }}
-                    >
-                      Mute notifications
-                    </button>
-
-                    <button
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      onClick={() => {
-                        console.log("View Profile clicked");
-                        setShowOptions(false);
-                      }}
-                    >
-                      Disappearing messages
-                    </button>
-
-                    <input
-                      id="wallpaperInput"
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          const url = URL.createObjectURL(file);
-                          setChatWallpaper(url);
-                        }
-                      }}
-                    />
-
-                    <button
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      onClick={() =>
-                        document.getElementById("wallpaperInput").click()
-                      }
-                    >
-                      Wallpaper
-                    </button>
-
-                    <button
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      onClick={() => {
-                        console.log("Block User clicked");
-                        setShowOptions(false);
-                      }}
-                    >
-                      More
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Messages */}
-            <div
-              className="flex-1 p-4 space-y-6 overflow-y-auto"
-              style={{
-                backgroundImage: chatWallpaper
-                  ? `url(${chatWallpaper})`
-                  : "none",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              {selectedUser?.messages?.map((msg, idx) => (
-                <div
-                  key={idx}
-                  className={`relative flex ${
-                    msg.me ? "justify-end" : "justify-start"
-                  }`}
-                  onClick={() => setSelectedMessageIdx(idx)}
-                >
-                  <div
-                    className={`max-w-sm p-3 rounded-xl ${
-                      msg.me
-                        ? "bg-blue-600 text-white"
-                        : "bg-white text-gray-800 shadow"
-                    }`}
-                  >
-                    
-                    {!msg.me && (
-                      <p className="text-xs text-gray-500 mb-1">{msg.sender}</p>
-                    )}
-                    <p className="text-sm">{msg.text}</p>
-                    <p className="text-xs mt-2 text-right">{msg.time}</p>
-                  </div>
-
-                  {selectedMessageIdx === idx && (
-                    <div className="absolute top-0 right-0 mt-[-20px] flex gap-2 bg-white shadow p-2 rounded">
-                      <button onClick={() => handleCopy(msg)}>
-                        <FiCopy />
-                      </button>
-                      <button onClick={() => handleForward(msg)}>
-                        <FiArrowRight />
-                      </button>
-                      <button onClick={() => handleDeleteMessage(idx)}>
-                        <FiTrash2 />
-                      </button>
-                      <button onClick={() => setSelectedMessageIdx(null)}>
-                        <FiX />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-center items-center">
-     {selectedUser?.type === "Requests" && (
-  <div className="flex gap-2 px-4 mb-4">
-    <button
-      onClick={() => {
-        console.log("Accepted");
-     
-        setChats(prevChats =>
-          prevChats.map(chat =>
-            chat.id === selectedUser.id
-              ? { ...chat, type: "Direct" }
-              : chat
-          )
-        );
-      
-        setSelectedUser({ ...selectedUser, type: "Direct" });
-      }}
-      className="bg-white text-black border border-gray-400 rounded-xl px-4 py-2"
-    >
-      Accept
-    </button>
-
-    <button
-      onClick={() => {
-        console.log("Rejected");
-        // Remove the request chat
-        setChats(prevChats =>
-          prevChats.filter(chat => chat.id !== selectedUser.id)
-        );
-        // Clear the selected user
-        setSelectedUser(null);
-      }}
-      className="bg-white text-black border border-gray-400 rounded-xl px-4 py-2"
-    >
-     Ignore
-    </button>
-
-    <button
-      onClick={() => {
-        console.log("Maybe Later");
-      }}
-      className="bg-white text-black border border-gray-400 rounded-xl px-4 py-2"
-    >
-     Report
-    </button>
-  </div>
-)}
-
-            </div>
-
-            {/* Input */}
-            {selectedUser && selectedUser.type !== "Requests" &&
-            <div className="relative dark:dark-color p-4 border-t bg-white flex items-center gap-3">
-              {/* Emoji */}
-              <div className="relative">
-                <button
-                  onClick={() => setShowEmojis(!showEmojis)}
-                  className="text-xl"
-                >
-                  😊
-                </button>
-                {showEmojis && (
-                  <div className="absolute bottom-14 left-0 bg-white border rounded shadow p-2 flex gap-2">
-                    {["😀", "😁", "😂", "😍", "👍"].map((emoji) => (
-                      <button
-                        key={emoji}
-                        className="text-2xl"
-                        onClick={() => {
-                          setMessageText((prev) => prev + emoji);
-                          setShowEmojis(false);
-                        }}
-                      >
-                        {emoji}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Text */}
-              <textarea
-                value={messageText}
-                onChange={(e) => setMessageText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
+            <MdExpandLess className="transform rotate-[-90deg] text-2xl" />
+          </Link>
+          <img
+            src={
+              selectedUser.avatar
+                ? selectedUser.avatar
+                : "https://i.pravatar.cc/40"
+            }
+            alt=""
+            className="rounded-full w-10 h-10"
+          />
+          <div>
+            <h3 className="font-semibold">
+              {selectedUser.name}
+            </h3>
+            <p className="text-xs text-gray-500">
+              Last seen {selectedUser.lastSeen}
+            </p>
+          </div>
+        </div>
+        <div className="space-x-3">
+          <button
+            onClick={() =>
+              navigate("/videocall", { state: { user: selectedUser } })
+            }
+          >
+            <FaPhoneAlt className="text-2xl" />
+          </button>
+          <button
+            onClick={() =>
+              navigate("/videocall", { state: { user: selectedUser } })
+            }
+          >
+            <FaVideo className="text-2xl" />
+          </button>
+          <button
+            onClick={() => setShowOptions(!showOptions)}
+            className="text-3xl"
+          >
+            ⋮
+          </button>
+          {showOptions && (
+            <div className="dark:dark-color absolute right-4 top-14 bg-white border rounded shadow w-46 z-50">
+              <button
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                onClick={() => setShowOptions(false)}
+              >
+                Label chat
+              </button>
+              <button
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                onClick={() => setShowOptions(false)}
+              >
+                View Contact
+              </button>
+              <input
+                type="file"
+                id="mediaInput"
+                className="hidden"
+                multiple
+                accept="image/*,application/pdf"
+              />
+              <button
+                onClick={() => {
+                  document.getElementById("mediaInput").click();
+                  setShowOptions(false);
+                }}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+              >
+                Media, Links and docs
+              </button>
+              <button
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                onClick={() => setShowOptions(false)}
+              >
+                Search
+              </button>
+              <button
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                onClick={() => setShowOptions(false)}
+              >
+                Mute notifications
+              </button>
+              <button
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                onClick={() => setShowOptions(false)}
+              >
+                Disappearing messages
+              </button>
+              <input
+                id="wallpaperInput"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    const url = URL.createObjectURL(file);
+                    setChatWallpaper(url);
                   }
                 }}
-                placeholder="Write a message..."
-                className="dark:dark-color dark:text-black dark:border dark:border-gray-600 rounded-xl flex-1 px-4 py-2 outline-none text-sm resize-none"
               />
-
-              {/* Attach */}
-              <div className="dark:dark-color relative">
-                <button onClick={() => setShowPopup(!showPopup)}>
-                  <img src={LinkIcon} alt="" />
-                </button>
-                {showPopup && (
-                  <div className="dark:dark-color absolute bottom-14 right-0 bg-white border rounded shadow p-4 w-48 flex flex-col flex row-3 gap-3 z-50">
-                    {/* Attach options */}
-                    <input
-                      type="file"
-                      id="docInput"
-                      accept=".pdf,.doc,.docx"
-                      className="hidden"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          console.log("Selected document:", file);
-                        }
-                      }}
-                    />
-                    <button
-                      className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
-                      onClick={() =>
-                        document.getElementById("docInput").click()
-                      }
-                    >
-                      <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
-                        <IoDocumentText />
-                      </span>
-                      Document
-                    </button>
-
-                    <input
-                      type="file"
-                      id="cameraInput"
-                      accept="image/*"
-                      capture="environment"
-                      className="hidden"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          console.log("Captured photo:", file);
-                        }
-                      }}
-                    />
-
-                    <button
-                      className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
-                      onClick={() =>
-                        document.getElementById("cameraInput").click()
-                      }
-                    >
-                      <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
-                        <FaCamera />
-                      </span>{" "}
-                      Camera
-                    </button>
-
-                    <input
-                      type="file"
-                      id="galleryInput"
-                      accept="image/*"
-                      multiple
-                      className="hidden"
-                      onChange={(e) => {
-                        const files = e.target.files;
-                        console.log("Selected gallery images:", files);
-                      }}
-                    />
-
-                    <button
-                      className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
-                      onClick={() =>
-                        document.getElementById("galleryInput").click()
-                      }
-                    >
-                      <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
-                        <GrGallery />
-                      </span>{" "}
-                      Gallery
-                    </button>
-
-                    <button
-                      className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded mb-4"
-                      onClick={handleGetLocation}
-                    >
-                      <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
-                        <MdLocationOn />
-                      </span>{" "}
-                      Location
-                    </button>
-                   
-                    <button className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded">
-                      <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
-                        <RiContactsFill />
-                      </span>{" "}
-                      Contact
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Send */}
               <button
-                onClick={handleSend}
-                className="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center"
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                onClick={() =>
+                  document.getElementById("wallpaperInput").click()
+                }
               >
-                <img src={SendIcon} alt="" className="w-6 h-6 -rotate-45" />
+                Wallpaper
+              </button>
+              <button
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                onClick={() => setShowOptions(false)}
+              >
+                More
               </button>
             </div>
-}
+          )}
+        </div>
+      </div>
+
+      {/* === Messages === */}
+      <div
+        className="flex-1 p-4 space-y-6 overflow-y-auto"
+        style={{
+          backgroundImage: chatWallpaper ? `url(${chatWallpaper})` : "none",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+       
+       
+       
+        {selectedUser?.messages?.map((msg, idx) => (
+          <div
+            key={idx}
+            className={`relative flex ${
+              msg.me ? "justify-end" : "justify-start"
+            }`}
+            onClick={() => setSelectedMessageIdx(idx)}
+          >
+            {/* <div
+              className={`max-w-sm p-3 rounded-xl ${
+                msg.me
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-800 shadow"
+              }`}
+            >
+              {!msg.me && (
+                <p className="text-xs text-gray-500 mb-1">{msg.sender}</p>
+              )}
+              <p className="text-sm">{msg.text}</p>
+              <p className="text-xs mt-2 text-right">{msg.time}</p>
+            </div> */}
+
+         <div
+  key={idx}
+  className={`relative flex group ${msg.me ? "justify-end" : "justify-start"}`}
+>
+  <div
+    className={`max-w-sm p-3 rounded-xl ${
+      msg.me
+        ? "bg-blue-600 text-white"
+        : "bg-white text-gray-800 shadow"
+    }`}
+  >
+    {!msg.me && (
+      <p className="text-xs text-gray-500 mb-1">{msg.sender}</p>
+    )}
+    <p className="text-sm">{msg.text}</p>
+    <p className="text-xs mt-2 text-right">{msg.time}</p>
+  </div>
+
+  <div className="absolute top-0 right-0 mt-[-20px] hidden group-hover:flex gap-2 bg-white shadow p-2 rounded">
+    <button onClick={() => handleCopy(msg)}>
+      <FiCopy />
+    </button>
+    <button onClick={() => handleForward(msg)}>
+      <IoIosSend />
+    </button>
+    <button onClick={() => handleDeleteMessage(idx)}>
+      <FiTrash2 />
+    </button>
+  </div>
+</div>
+
           </div>
+        ))}
+      </div>
+
+      {/* === Request Actions === */}
+      {selectedUser?.type === "Requests" && (
+        <div className="flex justify-center items-center">
+          <div className="flex gap-2 px-4 mb-4">
+            <button
+              onClick={() => {
+                setChats((prev) =>
+                  prev.map((chat) =>
+                    chat.id === selectedUser.id
+                      ? { ...chat, type: "Direct" }
+                      : chat
+                  )
+                );
+                setSelectedUser({ ...selectedUser, type: "Direct" });
+              }}
+              className="bg-white text-black border border-gray-400 rounded-xl px-4 py-2"
+            >
+              Accept
+            </button>
+            <button
+              onClick={() => {
+                setChats((prev) =>
+                  prev.filter((chat) => chat.id !== selectedUser.id)
+                );
+                setSelectedUser(null);
+              }}
+              className="bg-white text-black border border-gray-400 rounded-xl px-4 py-2"
+            >
+              Ignore
+            </button>
+            <button
+              onClick={() => console.log("Report clicked")}
+              className="bg-white text-black border border-gray-400 rounded-xl px-4 py-2"
+            >
+              Report
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* === Input === */}
+      {selectedUser?.type !== "Requests" && (
+        <div className="relative dark:dark-color p-4 border-t bg-white flex items-center gap-3">
+          {/* Emoji */}
+          <div className="relative">
+            <button
+              onClick={() => setShowEmojis(!showEmojis)}
+              className="text-xl"
+            >
+              😊
+            </button>
+            {showEmojis && (
+              <div className="absolute bottom-14 left-0 bg-white border rounded shadow p-2 flex gap-2">
+                {["😀", "😁", "😂", "😍", "👍"].map((emoji) => (
+                  <button
+                    key={emoji}
+                    className="text-2xl"
+                    onClick={() => {
+                      setMessageText((prev) => prev + emoji);
+                      setShowEmojis(false);
+                    }}
+                  >
+                    {emoji}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Textarea */}
+          <textarea
+            value={messageText}
+            onChange={(e) => setMessageText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
+            placeholder="Write a message..."
+            className="dark:dark-color dark:text-black dark:border dark:border-gray-600 rounded-xl flex-1 px-4 py-2 outline-none text-sm resize-none"
+          />
+
+          {/* Attach */}
+          <div className="dark:dark-color relative">
+            <button onClick={() => setShowPopup(!showPopup)}>
+              <img src={LinkIcon} alt="" />
+            </button>
+            {showPopup && (
+              <div className="dark:dark-color absolute bottom-14 right-0 bg-white border rounded shadow p-4 w-48 flex flex-col gap-3 z-50">
+                {/* Document */}
+                <input
+                  type="file"
+                  id="docInput"
+                  accept=".pdf,.doc,.docx"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      console.log("Selected document:", file);
+                    }
+                  }}
+                />
+                <button
+                  className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
+                  onClick={() => document.getElementById("docInput").click()}
+                >
+                  <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
+                    <IoDocumentText />
+                  </span>
+                  Document
+                </button>
+
+                {/* Camera */}
+                <input
+                  type="file"
+                  id="cameraInput"
+                  accept="image/*"
+                  capture="environment"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      console.log("Captured photo:", file);
+                    }
+                  }}
+                />
+                <button
+                  className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
+                  onClick={() => document.getElementById("cameraInput").click()}
+                >
+                  <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
+                    <FaCamera />
+                  </span>{" "}
+                  Camera
+                </button>
+
+                {/* Gallery */}
+                <input
+                  type="file"
+                  id="galleryInput"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    console.log("Selected gallery images:", files);
+                  }}
+                />
+                <button
+                  className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
+                  onClick={() => document.getElementById("galleryInput").click()}
+                >
+                  <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
+                    <GrGallery />
+                  </span>{" "}
+                  Gallery
+                </button>
+
+                {/* Location */}
+                <button
+                  className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
+                  onClick={handleGetLocation}
+                >
+                  <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
+                    <MdLocationOn />
+                  </span>{" "}
+                  Location
+                </button>
+
+                {/* Contact */}
+                <button className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded">
+                  <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
+                    <RiContactsFill />
+                  </span>{" "}
+                  Contact
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Send */}
+          <button
+            onClick={handleSend}
+            className="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center"
+          >
+            <img src={SendIcon} alt="" className="w-6 h-6 -rotate-45" />
+          </button>
+        </div>
+      )}
+    </>
+  ) : (
+    <div className="flex-1 flex items-center justify-center text-center p-10">
+      <div>
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4076/4076507.png"
+          alt="No Chat Selected"
+          className="w-40 h-40 mx-auto mb-4 opacity-50"
+        />
+        <h2 className="text-xl font-semibold text-gray-600 mb-2">
+          No conversation selected
+        </h2>
+        <p className="text-gray-500">
+          Select a chat from the sidebar to start messaging.
+        </p>
+      </div>
+    </div>
+  )}
+</div>
+
         </div>
       )}
       <Footer/> 

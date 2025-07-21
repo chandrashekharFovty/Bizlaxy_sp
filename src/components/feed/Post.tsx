@@ -268,7 +268,7 @@ export function Post({
 
   return (
     <>
-      <div className="shadow-xl dark:shadow  dark:border dark:border-gray-300 dark:glass-bg-dark  max-md:w-screen max-md:mr-4 bg-white p-5 rounded-xl w-full relative z-10">
+      <div className="shadow-lg shadow-gray-200 dark:shadow  dark:border dark:border-gray-300 dark:glass-bg-dark  max-md:w-screen max-md:mr-4 bg-white p-5 rounded-xl w-full relative z-10">
         <div className=" flex justify-between py-[7px]">
           <div className="max-md:w-11/12 flex gap-2">
             <UserAvatar src={user.avatar} />
@@ -284,7 +284,7 @@ export function Post({
                   />
                 )}
                 {showOfficialIcon && (
-                  <img src={officialIcon} className="w-3 h-3" />
+                  <img src={officialIcon} className="w-4 h-4" />
                 )}
                 {showFollowButton && <FollowButton />}
               </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   X,
   Heart,
@@ -6,9 +6,8 @@ import {
   ArrowRightCircle,
   ArrowLeftCircle,
 } from "lucide-react";
-import { Link } from "react-router-dom";
 import StoryPopover from "./StoryPopover";
-import { TbPlayerPlay, TbPlayerPause } from "react-icons/tb"; // ✅ import pause icon too!
+import { TbPlayerPlay, TbPlayerPause } from "react-icons/tb";
 
 export interface MediaItem {
   type: "image" | "video";
@@ -43,7 +42,12 @@ const StoryModal: React.FC<Props> = ({
   const duration = 3000; // 3 sec for images
   const [liked, setLiked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [paused, setPaused] = useState(false); 
+  const [paused, setPaused] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const elapsedSoFar = useRef(0);
+  const lastStartTime = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const users = [
     { id: 1, name: "imkr", img: "/Hide.jpg" },
@@ -71,6 +75,9 @@ const StoryModal: React.FC<Props> = ({
     setPaused((prev) => !prev);
   };
 
+  const handleHoldStart = () => setPaused(true);
+  const handleHoldEnd = () => setPaused(false);
+
   const media = story.media || [];
 
   useEffect(() => {
@@ -83,22 +90,34 @@ const StoryModal: React.FC<Props> = ({
     if (current.type === "video") return;
 
     setProgress(0);
-    const start = Date.now();
+    elapsedSoFar.current = 0;
+    lastStartTime.current = Date.now();
 
-    const interval = setInterval(() => {
-      if (paused) return; // respect pause
-      const elapsed = Date.now() - start;
+    intervalRef.current = setInterval(() => {
+      if (paused) {
+        if (lastStartTime.current) {
+          elapsedSoFar.current += Date.now() - lastStartTime.current;
+          lastStartTime.current = null;
+        }
+        return;
+      }
+
+      if (!lastStartTime.current) {
+        lastStartTime.current = Date.now();
+      }
+
+      const elapsed = elapsedSoFar.current + (Date.now() - lastStartTime.current);
       const percent = Math.min((elapsed / duration) * 100, 100);
       setProgress(percent);
 
       if (percent >= 100) {
-        clearInterval(interval);
+        clearInterval(intervalRef.current!);
         handleNext();
       }
     }, 50);
 
-    return () => clearInterval(interval);
-  }, [currentIndex, media, paused]); //depend on paused
+    return () => clearInterval(intervalRef.current!);
+  }, [currentIndex, media, paused]);
 
   const handleNext = () => {
     if (currentIndex < media.length - 1) {
@@ -130,6 +149,14 @@ const StoryModal: React.FC<Props> = ({
     return () => window.removeEventListener("keydown", handleKey);
   }, [currentIndex, media]);
 
+  // ✅✅✅ Added: handleShareSend
+  const handleShareSend = () => {
+    console.log("Sending to:", selectedUsers);
+    // Your real send logic goes here
+    setSelectedUsers([]); // optional clear
+    setIsOpen(false); // close panel
+  };
+
   if (media.length === 0) return null;
 
   const current = media[currentIndex];
@@ -149,7 +176,7 @@ const StoryModal: React.FC<Props> = ({
                     ? 100
                     : index === currentIndex
                     ? progress
-                    : 0
+                    : ""
                 }
                 max={100}
                 className="w-full h-[3px] rounded bg-gray-600 [&::-webkit-progress-bar]:bg-gray-600 [&::-webkit-progress-value]:bg-white"
@@ -187,8 +214,14 @@ const StoryModal: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* Media */}
-          <div className="flex-1 flex items-center justify-center overflow-hidden mb-4">
+          {/* Media with tap and hold */}
+          <div
+            className="flex-1 relative flex items-center justify-center overflow-hidden mb-4"
+            onMouseDown={handleHoldStart}
+            onMouseUp={handleHoldEnd}
+            onTouchStart={handleHoldStart}
+            onTouchEnd={handleHoldEnd}
+          >
             {current.type === "image" ? (
               <img
                 src={current.src}
@@ -204,15 +237,44 @@ const StoryModal: React.FC<Props> = ({
                 className="w-full h-full object-cover rounded-md"
               />
             )}
+
+            {/* Tap LEFT */}
+            <div
+              className="absolute top-0 left-0 w-1/2 h-full cursor-pointer"
+              onClick={handlePrev}
+            />
+
+            {/* Tap RIGHT */}
+            <div
+              className="absolute top-0 right-0 w-1/2 h-full cursor-pointer"
+              onClick={handleNext}
+            />
           </div>
 
           {/* Bottom Actions */}
           <div className="flex justify-between items-center border-t border-white/10 pt-3">
-            <input
-              type="text"
-              placeholder="Send Message"
-              className="flex-1 mr-3 h-9 bg-transparent border border-white/30 outline-none text-white px-3 rounded-full text-sm placeholder-white/60"
-            />
+            <div className="relative flex-1 mr-3">
+              <input
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Send Message"
+                className="w-full h-9 bg-transparent border border-white/30 outline-none text-white pl-3 pr-12 rounded-full text-sm placeholder-white/60"
+              />
+
+              {message && (
+                <button
+                  onClick={() => {
+                    console.log("Sending message:", message);
+                    setMessage("");
+                  }}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-blue-500 hover:text-blue-400"
+                >
+                  Send
+                </button>
+              )}
+            </div>
+
             <div className="flex gap-3">
               <Heart
                 className={`w-5 h-5 cursor-pointer ${
@@ -228,7 +290,7 @@ const StoryModal: React.FC<Props> = ({
           </div>
         </div>
 
-        {/* Left Arrow — Go to previous USER story */}
+        {/* Left Arrow */}
         {hasPrevUserStory && (
           <button
             onClick={() => {
@@ -250,7 +312,18 @@ const StoryModal: React.FC<Props> = ({
                 onNextUserStory();
               }
             }}
-            className="max-md:hidden absolute right-[400px] top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 rounded-full text-white transition"
+          className="
+  hidden md:block 
+  absolute 
+  right-[130px] 
+  lg:right-[300px] 
+  xl:right-[400px] 
+  2xl:right-[38%] 
+  top-1/2 -translate-y-1/2 
+  bg-white/10 hover:bg-white/20 
+  p-3 rounded-full text-white transition
+"
+
             aria-label="Next User Story"
           >
             <ArrowRightCircle className="w-6 h-6" />
@@ -261,27 +334,23 @@ const StoryModal: React.FC<Props> = ({
       {/* SLIDE-UP PANEL */}
       {isOpen && (
         <>
-          {/* Overlay */}
           <div
             className="fixed inset-0 z-50 bg-black/50 h-screen"
             onClick={() => setIsOpen(false)}
           ></div>
 
-          {/* Modal */}
           <div
             className="
-      xl:h-[470px]
-        fixed z-50
-        bottom-0 left-0 right-0
-        bg-white dark:dark-color
-        rounded-t-xl shadow-lg
-        md:inset-0 md:m-auto md:max-w-md md:rounded-xl md:shadow-2xl md:h-auto
-      "
+              xl:h-[470px]
+              fixed z-50
+              bottom-0 left-0 right-0
+              bg-white dark:dark-color
+              rounded-t-xl shadow-lg
+              md:inset-0 md:m-auto md:max-w-md md:rounded-xl md:shadow-2xl md:h-auto
+            "
           >
-            {/* Drag handle for mobile */}
             <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto my-2 md:hidden" />
 
-            {/* Search */}
             <div className="px-4 pb-2 ">
               <input
                 type="text"
@@ -290,8 +359,7 @@ const StoryModal: React.FC<Props> = ({
               />
             </div>
 
-            {/* User list */}
-            <ul className="max-h-80 overflow-y-auto  scrollbar-hide px-4">
+            <ul className="max-h-80 overflow-y-auto scrollbar-hide px-4">
               {users.map((user) => (
                 <li
                   key={user.id}
@@ -315,14 +383,12 @@ const StoryModal: React.FC<Props> = ({
               ))}
             </ul>
 
-            {/* Footer */}
-            {selectedUsers.length === 0 ? (
-              <div className="flex gap-6 overflow-x-auto px-4 py-4 border-t border-gray-400 shadow-xl">
-                {/* Share buttons here */}
-              </div>
-            ) : (
+            {selectedUsers.length > 0 && (
               <div className="w-full px-4 py-4 border-t">
-                <button className="w-full h-12 bg-blue-800 text-white text-center rounded-xl">
+                <button
+                  onClick={handleShareSend} //  here
+                  className="w-full h-12 bg-blue-800 text-white text-center rounded-xl"
+                >
                   Send
                 </button>
               </div>

@@ -26,7 +26,33 @@ import AddsManager6 from "../../../public/AdManager6.png";
 import AddsManager7 from "../../../public/AdManager7.png";
 import AddsManager8 from "../../../public/AdManager8.png";
 
-
+const performing = [
+  {
+    id: 1,
+    image: "/TopPerforming1.png",
+    title: "Boost Your Startup Visibility with Targeted Investors",
+    description: "Reach verified investors actively exploring innovative startups like yours. Highlight your mission, traction, and funding ask in one impactful pitch.",
+  },
+  {
+    id: 2,
+    image: "/TopPerforming2.png",
+    title: "Transform your Identity!",
+    description: "Reach verified investors actively exploring innovative startups like yours. Highlight your mission, traction, and funding ask in one impactful pitch.",
+  },
+    {
+    id: 3,
+    image: "/TopPerforming3.png",
+    title: "Transform your Identity!",
+    description: "Reach verified investors actively exploring innovative startups like yours. Highlight your mission, traction, and funding ask in one impactful pitch.",
+  },
+    {
+    id: 4,
+    image: "/TopPerforming4.png",
+    title: "Transform your Identity!",
+    description: "Reach verified investors actively exploring innovative startups like yours. Highlight your mission, traction, and funding ask in one impactful pitch.",
+  },
+ 
+];
 
 const data = [
   { name: "Mon", clicks: 400 },
@@ -669,6 +695,30 @@ const Dashboard = () => {
           </p>
         </div>
       </div>
+
+       <div className="p-4">
+      <h2 className="text-xl font-semibold mb-6">Top Performing Ad’s</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {performing.map((ad) => (
+          <div
+            key={ad.id}
+            className="bg-white shadow rounded-xl p-2 flex flex-col justify-between"
+          >
+            <img
+              src={ad.image}
+              alt={ad.title}
+              className="w-full h-46 object-cover rounded-xl mb-2"
+            />
+            <h3 className="text-sm font-medium mb-2">{ad.title}</h3>
+            <p className="text-gray-600 text-xs mb-4">{ad.description}</p>
+            <button className="bg-[#1C4BC4] text-white py-1 text-sm px-4 rounded hover:bg-blue-700">
+              Learn More
+            </button>
+            <p className="text-xs text-gray-500 mt-2">Sponsored | Ad by Bizlaxy</p>
+          </div>
+        ))}
+      </div>
+    </div>
     </div>
   );
 };

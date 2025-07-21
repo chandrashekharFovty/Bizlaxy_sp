@@ -14,6 +14,7 @@ import { Ellipsis, ExpandIcon } from "lucide-react";
 import { Item } from "@radix-ui/react-accordion";
 import { FiSend } from "react-icons/fi";
 import { FollowButton, FollowButtonCard } from "../ui/FollowButton";
+import { IoMdMore } from "react-icons/io";
 
 type Reply = {
   replyId: number;
@@ -268,6 +269,20 @@ export default function MainContent() {
     }
   };
 
+
+   function formatNumber(num) {
+    if (num >= 1000000000) {
+      return (num / 1000000000).toFixed(1).replace(/\.0$/, "") + "B";
+    }
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+    }
+    return num;
+  }
+
   return (
     <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen h-[95vh] max-md:my-0 my-5 rounded-xl max-md:rounded-none w-[440px] overflow-y-scroll scrollbar-hide">
       {mediaList.map((media, idx) => {
@@ -349,50 +364,73 @@ export default function MainContent() {
                 <FaThumbsUp size={120} className="text-white drop-shadow-lg" />
               </div>
             )}
-            <div className="absolute flex flex-col gap-3 right-4 top-3/4 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
-              {/* RIGHT-SIDE LIKE BUTTON */}
-              <div
-                onClick={() => toggleLike(media.id)}
-                className="cursor-pointer"
-              >
-                {liked ? (
-                  <FaThumbsUp size={32} className="text-white mb-2" />
-                ) : (
-                  <FaRegThumbsUp size={32} className="text-white mb-2" />
-                )}
-                <p className="text-center text-sm">{media.likes}</p>
-              </div>
 
-              <div
-                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                className="cursor-pointer text-white"
-              >
-                <span>
-                  <FaRegComment size={36} className="mb-2" />
-                </span>
-                <p className="text-center text-sm">{media.comments.length}</p>
-              </div>
 
-              <div
-                onClick={() => alert("Share dialog opens here")}
-                className="cursor-pointer dark:text-white text-white"
-              >
-                <span>
-                  {" "}
-                  <FaShare size={36} className="mb-2" />
-                </span>
-                <p className="text-center text-sm">{media.shares}</p>
-              </div>
-              <div
-                onClick={() => setShowMoreOptions(idx)}
-                className="cursor-pointer dark:text-white text-white"
-              >
-                <span>
-                  {" "}
-                  <Ellipsis size={36} className="mb-2" />
-                </span>
-              </div>
-            </div>
+           <div className="absolute flex flex-col right-4 top-3/4 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
+       {/* LIKE BUTTON */}
+       <div
+         onClick={() => toggleLike(media.id)}
+         className="cursor-pointer flex flex-col items-center"
+       >
+      <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
+       {liked ? (
+         <img src="/LikePitch.png" alt="Like" className="w-5 h-5" />
+       ) : (
+         <FaThumbsUp className="w-5 h-5 text-white" />
+       )}
+     </div>
+     
+         <p className="text-center text-sm text-white">
+           {formatNumber(media.likes)}
+         </p>
+       </div>
+     
+       {/* COMMENT BUTTON */}
+       <div
+         onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+         className="cursor-pointer flex flex-col items-center"
+       >
+         <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
+           <img
+             src="/CommentsPitch.png"
+             alt="Comment"
+             className="w-5 h-5"
+           />
+         </div>
+         <p className="text-center text-sm text-white">
+           {formatNumber(media.comments.length)}
+         </p>
+       </div>
+     
+       {/* SHARE BUTTON */}
+       <div
+         onClick={() => alert("Share dialog opens here")}
+         className="cursor-pointer flex flex-col items-center"
+       >
+         <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
+           <img
+             src="/SendPitch.png"
+             alt="Share"
+             className="w-5 h-5"
+           />
+         </div>
+         <p className="text-center text-sm text-white">
+           {formatNumber(media.shares)}
+         </p>
+       </div>
+     
+       {/* MORE OPTIONS BUTTON */}
+       <div
+         onClick={() => setShowMoreOptions(idx)}
+         className="cursor-pointer flex flex-col items-center"
+       >
+         <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
+         <IoMdMore
+             className="text-xl"
+           />
+         </div>
+       </div>
+     </div>
             {/* Moving pitch card when tray opens */}
             <div
               className={`absolute inset-0 transition-transform duration-1000 ease-out ${

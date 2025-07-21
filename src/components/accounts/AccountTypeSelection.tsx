@@ -25,12 +25,14 @@ const SelectAccountType = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex max-md:flex-col max-h-screen  max-md:w-screen max-md:h-screen overflow-x-hidden">
-      <div className="max-w-3xl max-md:hidden w-3/12 max-md:w-screen h-screen max-md:pt-1 pt-[33%] fixed bg-indigo-600 text-white flex overflow-hidden items-center justify-center">
-        <InfoCrousel InfoBoxes={InfoBox} />
+    <div className="flex max-md:flex-col  max-h-screen  max-md:w-screen max-md:h-screen overflow-x-hidden">
+   <div className="max-w-3xl max-md:hidden w-4/12 max-md:w-screen h-screen max-md:pt-1  fixed bg-gradient-to-r from-purple-500 to-blue-700 bg-opacity-60 backdrop-blur-lg text-white flex overflow-hidden items-center justify-center">
+  <div className="border border-white p-6 bg-white/10 w-[400px] rounded-xl">
+          <InfoCrousel InfoBoxes={InfoBox} />
+      </div>
       </div>
 
-      <div className="w-9/12 ml-[25%] px-5 max-md:w-screen max-md:h-full max-md:mx-auto bg-white">
+      <div className="w-8/12  ml-[35%] px-5 max-md:w-screen max-md:h-full max-md:mx-auto bg-white">
         <div className="fixed bg-white w-full h-14 my-8 max-md:my-2 flex flex-col gap-2 z-30">
           <h3 className="text-xl font-bold max-md:text-[16px]">Select Account Type</h3>
           <p className="text-sm max-md:text-xs font-normal text-gray-500">
@@ -51,7 +53,7 @@ const SelectAccountType = () => {
           ))}
         </div>
 
-        <div className="fixed w-9/12 max-md:w-11/12  h-16 max-md:h-8 px-8 max-md:px-2 py-4 max-md:py-1">
+        <div className="fixed w-9/12 max-md:w-11/12  h-20 max-md:h-8 px-8 max-md:px-2 py-4 max-md:py-1">
           <div className="w-full h-full flex justify-end items-center">
             {selected ? (
               <button

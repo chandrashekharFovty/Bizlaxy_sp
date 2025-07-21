@@ -15,7 +15,7 @@ export default function InfoCarousel({ InfoBoxes }: InfoBoxProps): JSX.Element {
 
   useEffect(() => {
     const id = setInterval(() => {
-      setCurrentIndex(i => (i + 1) % InfoBoxes.length);
+      setCurrentIndex((i) => (i + 1) % InfoBoxes.length);
     }, 3000);
     return () => clearInterval(id);
   }, [InfoBoxes.length]);
@@ -23,20 +23,18 @@ export default function InfoCarousel({ InfoBoxes }: InfoBoxProps): JSX.Element {
   const { title, descp } = InfoBoxes[currentIndex];
 
   return (
-    <div className="max-md:w-screen max-md:h-full flex justify-center bg-indigo-600 h-screen overflow-hidden px-5">
-      <div className="w-full h-full overflow-hidden">
-      <h2 className="text-2xl max-md:text-[16px] font-semibold mb-2 h-12 max-md:h-5">{title}</h2>
-      <p className="text-lg max-md:text-xs font-normal h-28 max-md:h-12 mt-3 max-md:mt-1 overflow-hidden">{descp}</p>
-      <div className="flex mt-5 gap-2 max-md:justify-center">
+    <div className="w-full h-full flex flex-col justify-center items-start">
+      <h2 className="text-2xl font-semibold mb-4">{title}</h2>
+      <p className="text-lg font-normal mb-6">{descp}</p>
+      <div className="flex gap-2">
         {InfoBoxes.map((_, idx) => (
-          <hr
+          <div
             key={idx}
-            className={`h-[6px] cursor-pointer rounded-3xl bg-white 
-                ${idx === currentIndex ? "active w-16 max-md:w-12 opacity-100 -space-x-4" : "inactive bg-blue-200 opacity-50 -space-x-1 w-8"}`}
             onClick={() => setCurrentIndex(idx)}
-          />
+            className={`h-[6px] rounded-full cursor-pointer transition-all duration-300
+            ${idx === currentIndex ? "w-16 bg-white" : "w-8 bg-white/50"}`}
+          ></div>
         ))}
-      </div>
       </div>
     </div>
   );

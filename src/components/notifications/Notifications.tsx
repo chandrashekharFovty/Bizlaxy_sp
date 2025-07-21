@@ -101,6 +101,7 @@ const NotificationSection = ({
           <div key={i}>
             <div onClick={() => handleToggle(i)} className="cursor-pointer">
               <NotificationItem {...n} />
+              
             </div>
         {expandedIndex === i && n.type === "investor" && (
   <div className="flex flex-col gap-2 mt-2">
@@ -116,7 +117,7 @@ const NotificationSection = ({
 
       <button
         onClick={() => handleReject(i)}
-        className={`dark:dark-color px-3 py-1 w-24 text-black hover:text-blue-600 font-semibold border boder-gray-500  rounded-xl ${
+        className={`dark:dark-color px-3 py-1 w-24 text-black hover:text-blue-600 font-semibold border border-gray-500  rounded-xl ${
           actionMessage ? "hidden" : "block"
         }`}
       >
@@ -124,7 +125,7 @@ const NotificationSection = ({
       </button>
       <button
         onClick={handleAccept}
-        className={`dark:dark-color px-3 py-1 text-black hover:text-blue-600 font-semibold border boder-gray-500  rounded-xl ${
+        className={`dark:dark-color px-3 py-1 text-black hover:text-blue-600 font-semibold border border-gray-500  rounded-xl ${
           actionMessage ? "w-52" : "w-24"
         }`}
       >
