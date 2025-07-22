@@ -6,8 +6,17 @@ import { MdCheckCircle } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import phonepay from "../../../public/phonepay.jpg"
 import Wallet from "../MoreSettingMobile/Wallet";
+import Sidebar from "../layout/Sidebar";
+import { ArrowLeft } from "lucide-react";
+
+
+
 function Subscription() {
   const [activeTab, setActiveTab] = useState("Basic");
+    const [isYearly, setIsYearly] = useState(false);
+     const [selectedPlan, setSelectedPlan] = useState("Business");
+
+  const plans = ["Basic", "Business", "Investor"];
   const navigate=useNavigate() 
   // const handleContinue=()=>navigate("/payment")
 const handleContinue = () => {
@@ -347,7 +356,11 @@ const handleContinue = () => {
   };
 
   return (
-    <div className="">
+    <>
+    <div className="max-md:hidden ">
+<Sidebar/>
+    </div>
+    <div className="lg:hidden">
       {/* Back Link */}
       <Link
         to="/profile"
@@ -379,8 +392,108 @@ const handleContinue = () => {
         </div>
       </div>
     </div>
+
+
+
+
+
+
+     {/* Desktop View */}
+    
+      <div className="max-md:hidden max-lg:hidden ml-[250px] max-w-[1200px] mx-auto">
+        <Link to="/profile"><ArrowLeft/></Link>
+  <p className="pt-20 text-center font-semibold text-3xl">
+    Unlock More with <span className="text-purple-600">Bizlaxy</span> Premium
+  </p>
+
+  <div className="w-full flex justify-center mt-6">
+    <div className="relative w-[340px] h-12 rounded-full flex items-center px-1 border border-gray-400">
+      {/* Sliding background */}
+      <div
+        className={`absolute top-1 left-1 w-[168px] h-10 rounded-full bg-gradient-to-l from-[#1C4BC4] to-[#9645FF] transition-all duration-300 ${
+          isYearly ? "translate-x-[172px]" : ""
+        }`}
+      ></div>
+
+      {/* Toggle buttons */}
+      <div className="relative z-10 flex justify-between w-full text-sm font-semibold">
+        <button
+          onClick={() => setIsYearly(false)}
+          className={`w-1/2 h-10 rounded-full ${
+            !isYearly ? "text-white" : "text-black dark:text-white"
+          }`}
+        >
+          Monthly
+        </button>
+        <button
+          onClick={() => setIsYearly(true)}
+          className={`w-1/2 h-10 rounded-full ${
+            isYearly ? "text-white" : "text-black dark:text-white"
+          }`}
+        >
+          Yearly
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Pricing Plans */}
+  <div className="hidden md:flex justify-center gap-8 px-8 py-10">
+    {plans.map((plan) => {
+      const isSelected = selectedPlan === plan;
+
+      return (
+        <div
+          key={plan}
+          onClick={() => setSelectedPlan(plan)}
+          className={`w-[300px] p-6 pt-8 pb-8 rounded-2xl border shadow-md transition-all duration-300 cursor-pointer flex flex-col justify-between ${
+            isSelected
+              ? "bg-gradient-to-tr from-blue-600 to-purple-600 text-white"
+              : "bg-white text-black border-gray-300"
+          }`}
+        >
+          {/* Title */}
+          <h3
+            className={`text-xl font-bold mb-1 ${
+              isSelected ? "bg-clip-text text-transparent bg-gradient-to-r from-white to-white" : ""
+            }`}
+          >
+            {plan}
+          </h3>
+
+          {/* Price */}
+          <p className="text-3xl font-bold mt-4">
+            {plan === "Business" ? "$49" : "₹399"}
+            <span className="text-sm font-normal">/month</span>
+          </p>
+
+          {/* Features */}
+          <ul className="space-y-3 text-sm mt-6 mb-6">
+            <li>• Access Visitors' Full Details</li>
+            <li>• VIP Badge – Get a verified badge</li>
+            <li>• Anonymous Profile Visits</li>
+          </ul>
+
+          {/* Join Button */}
+          <button
+          onClick={()=>navigate("/payment")}
+            className={`w-full py-2 rounded-lg font-semibold ${
+              isSelected ? "bg-white text-black" : "bg-blue-700 text-white"
+            }`}
+          >
+            Join This Plan
+          </button>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+    </>
   );
 }
+
+
 
 
 

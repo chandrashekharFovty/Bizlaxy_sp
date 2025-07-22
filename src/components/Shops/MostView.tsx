@@ -102,7 +102,7 @@ const MostView = () => {
     ? mostViewedItems
     : isMobile
     ? mostViewedItems.slice(0, 3)
-    : mostViewedItems.slice(0, 6);
+    : mostViewedItems.slice(0, 5);
 
   const itemsToShow1 = mostViewedItems1; // always show all 4
 
@@ -122,7 +122,7 @@ const MostView = () => {
           )}
         </div>
 
-        <div className="px-3 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
+        <div className="px-3 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
       
           {itemsToShow.map((item, index) => (
                
@@ -139,7 +139,7 @@ const MostView = () => {
               <p className="dark:text-white max-md:text-xs mt-2 text-black font-bold">
                 {item.price}
               </p>
-              <button className="mt-2 bg-gradient-to-r from-blue-800 to-purple-700 text-white text-sm max-md:text-xs px-2 py-2 rounded-xl">
+              <button className="w-full mt-2 bg-gradient-to-r from-blue-800 to-purple-700 text-white text-sm max-md:text-xs px-2 py-2 rounded-xl">
                 Enquire Now
               </button>  </Link>
             </div>

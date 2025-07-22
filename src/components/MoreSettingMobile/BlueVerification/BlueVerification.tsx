@@ -10,6 +10,7 @@ import linkedIn from "../../../../public/linkedin (1).png";
 import twitter from "../../../../public/twitter (1).png";
 import twitter1 from "../../../../public/twitter (2).png";
 import link from "../../../../public/link.png";
+import { ArrowLeft } from "lucide-react";
 
 function BlueVerification() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -395,41 +396,54 @@ export function IdentityVerification({ onBack }) {
 
 // Selfie componet
 export function SelfyVerification({ onBack }) {
-  const [showVerification, setShowVerification] = useState(false);
-  const [showTakeSelfy, setShowTakeSelfy] = useState(false);
-  // const navigate = useNavigate();
+  const [step, setStep] = useState<"start" | "take" | "preview">("start");
+  const [selfieUrl, setSelfieUrl] = useState<string | null>(null);
 
-  if (showTakeSelfy)
-    return <TakeSelfy onBack={() => setShowTakeSelfy(false)} />;
+  if (step === "take") {
+    return (
+      <TakeSelfy
+        onBack={() => setStep("start")}
+        onNext={(url) => {
+          setSelfieUrl(url);
+          setStep("preview");
+        }}
+      />
+    );
+  }
 
+  if (step === "preview") {
+    return (
+      <PreviewSelfie
+        selfieUrl={selfieUrl}
+        onBack={() => setStep("take")}
+        onConfirm={() => {
+          // Submit or go to /applyverification
+          console.log("Confirmed selfie:", selfieUrl);
+        }}
+      />
+    );
+  }
+
+  // Default start screen
   return (
     <div className="dark:dark-color p-6 w-full h-full mx-auto text-center">
-      {/* Back Link */}
       <button onClick={onBack} className="flex items-center font-semibold mb-4">
-        <MdExpandLess
-          // onClick={() => navigate("/applyverification")}
-          className="transform rotate-[-90deg] text-[40px] cursor-pointer"
-        />
+        <MdExpandLess className="transform rotate-[-90deg] text-[40px] cursor-pointer" />
       </button>
 
-      {/* Title & Description */}
       <h1 className="text-2xl font-bold mb-2">Confirm with a Selfie</h1>
       <p className="text-gray-600 mb-8">
-        Take and upload a clear selfie while holding your selected ID to confirm
-        your identity. This helps us ensure authenticity and prevent
-        impersonation.
+        Take and upload a clear selfie while holding your selected ID to confirm your identity.
       </p>
 
-      {/* Image */}
       <img
         src={selfy}
         alt="Selfie verification illustration"
         className="mx-auto mb-8 w-60 h-60 object-cover"
       />
 
-      {/* Upload Selfie Button */}
       <button
-        onClick={() => setShowTakeSelfy(true)}
+        onClick={() => setStep("take")}
         className="mt-14 bg-blue-800 text-xl font-semibold rounded-xl text-white h-14 w-full flex items-center justify-center"
       >
         Upload Selfie
@@ -438,23 +452,26 @@ export function SelfyVerification({ onBack }) {
   );
 }
 
-export function TakeSelfy({ onBack }) {
-  const navigate = useNavigate();
+
+export function TakeSelfy({
+  onBack,
+  onNext,
+}: {
+  onBack: () => void;
+  onNext: (url: string) => void;
+}) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      navigate("/selfiepreview", {
-        state: { selfieUrl: URL.createObjectURL(file) },
-      });
+      const selfieUrl = URL.createObjectURL(file);
+      onNext(selfieUrl); // Call parent to go to Preview
     }
   };
 
   const handleButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    fileInputRef.current?.click();
   };
 
   return (
@@ -484,6 +501,7 @@ export function TakeSelfy({ onBack }) {
         className="hidden"
         onChange={handleFileChange}
       />
+
       <button
         onClick={handleButtonClick}
         className="w-full h-16 bg-blue-600 text-white font-semibold rounded-xl"
@@ -495,26 +513,20 @@ export function TakeSelfy({ onBack }) {
 }
 
 
-export function PreviewSelfie({onBack}) {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const selfieUrl = location.state?.selfieUrl;
 
-  const handleRetake = () => {
-    navigate("/takeselfie");
-  };
-
-  const handleUsePhoto = () => {
-    navigate("/applyverification");
-  };
-
+export function PreviewSelfie({
+  selfieUrl,
+  onBack,
+  onConfirm,
+}: {
+  selfieUrl: string | null;
+  onBack: () => void;
+  onConfirm: () => void;
+}) {
   return (
     <div className="dark:dark-color p-6 w-full h-full text-center flex flex-col items-center">
       <button onClick={onBack} className="self-start mb-4">
-        <MdExpandLess
-          
-          className="transform rotate-[-90deg] text-[40px] cursor-pointer"
-        />
+        <MdExpandLess className="transform rotate-[-90deg] text-[40px] cursor-pointer" />
       </button>
 
       <h1 className="text-xl font-bold mb-2">Preview Your Selfie</h1>
@@ -532,13 +544,13 @@ export function PreviewSelfie({onBack}) {
 
       <div className="flex gap-4">
         <button
-          onClick={handleRetake}
+          onClick={onBack}
           className="dark:text-white border border-gray-400 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100"
         >
           Retake Selfie
         </button>
         <button
-          onClick={handleUsePhoto}
+          onClick={onConfirm}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
         >
           Use This Photo
@@ -547,6 +559,7 @@ export function PreviewSelfie({onBack}) {
     </div>
   );
 }
+
 
 // Add Social media links
 export function SocialMedia({ onBack }) {
@@ -654,7 +667,7 @@ export function ShareProfessional({ onBack }) {
         // to="/applyverification"
         className="flex items-center font-semibold mb-6"
       >
-        <MdExpandLess
+        <ArrowLeft
         // onClick={() => navigate("/applyverification")}
         // className="transform rotate-[-90deg] text-[40px] cursor-pointer"
         />

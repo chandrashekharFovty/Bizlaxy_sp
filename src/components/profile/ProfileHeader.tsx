@@ -64,16 +64,17 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       <div className="flex items-center gap-2 max-md:h-8 max-md:mt-0 text-xl font-bold text-[#050505] ml-6 mt-2 max-md:ml-3">
         <span className="max-md:text-2xl dark:text-white">{username}</span>
         <img src="/RightMarkInvester.png" alt="Verified" className="max-md:w-6 max-md:h-6  object-cover w-3 h-3" />
+        <Link to="/subscription">
         <img
           src="https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/7eb8167ebc03b067106013d277e8da366e8ec872?placeholderIfAbsent=true"
           className="max-md:hidden w-[22px] h-[22px]"
           alt="Icon"
-        />
+        /></Link>
         <div className=" flex lg:hidden ml-auto m-2">
           <Link to="/subscription">
              <img
           src="https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/7eb8167ebc03b067106013d277e8da366e8ec872?placeholderIfAbsent=true"
-          className=" lg:hidden w-[32px] h-[32px] max-md:justify-end"
+          className="  w-[32px] h-[32px] max-md:justify-end"
           alt="Icon"
         /></Link>
           <Link to="/settings">

@@ -26,6 +26,7 @@ const initialChatUsers = [
     lastSeen: "2m ago",
     preview: "Interested in bulk order of So...",
     avatar: "https://i.pravatar.cc/40?img=1",
+    isOnline:true,
     messages: [
       {
         sender: "Akash Retail",
@@ -48,6 +49,7 @@ const initialChatUsers = [
     lastSeen: "5m ago",
     preview: "Hey! Did you check the files?",
     avatar: "https://i.pravatar.cc/40?img=2",
+     isOnline:true,
     messages: [
       {
         sender: "Mike Mazowski",
@@ -501,16 +503,24 @@ const MessagePage = () => {
         } ${pinnedUserIds.includes(user.id) ? "border-blue-400 border-2" : ""}`}
       >
         <div className="flex items-center gap-4">
-          <img
-            src={user.avatar}
-            alt={user.name}
-            className="rounded-full max-md:w-14 max-md:h-14 w-10 h-10"
-          />
+       <div className="relative">
+  <img
+    src={user.avatar}
+    alt={user.name}
+    className="rounded-full max-md:w-14 max-md:h-14 w-10 h-10"
+  />
+  {user.isOnline && (
+    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+  )}
+</div>
+
           <div>
             <p className="font-medium text-sm">{user.name}</p>
             <p className="text-xs text-gray-500">{user.preview}</p>
           </div>
-          <span className="text-xs text-gray-400">{user.lastSeen}</span>
+       <span className="text-xs text-gray-400">
+    {user.isOnline ? "Online" : user.lastSeen}
+  </span>
         </div>
 
         {/* Pin/Unpin Button */}
@@ -568,9 +578,12 @@ const MessagePage = () => {
             <h3 className="font-semibold">
               {selectedUser.name}
             </h3>
-            <p className="text-xs text-gray-500">
+             <span className="text-xs text-gray-400">
+    {selectedUser.isOnline ? "Online" : selectedUser.lastSeen}
+  </span>
+            {/* <p className="text-xs text-gray-500">
               Last seen {selectedUser.lastSeen}
-            </p>
+            </p> */}
           </div>
         </div>
         <div className="space-x-3">

@@ -8,6 +8,10 @@ import {
   DialogBackdrop,
   DialogPanel,
 } from "@headlessui/react";
+import { IoShareSocialOutline } from "react-icons/io5";
+import { IoMdNotificationsOff, IoMdNotificationsOutline } from "react-icons/io";
+import { MdOutlineInsertLink } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
 
 export function PostModal() {
   const [open, setOpen] = useState(false);
@@ -29,27 +33,27 @@ export function PostModal() {
       msg: "Post Saved",
     },
     {
-      icon: <img src="/shareLink.png" alt="share" className="w-5 h-5" />,
+      icon: <IoShareSocialOutline className="text-2xl" />,
       label: "Share Post",
       msg: "Post Shared",
     },
     {
-      icon: <img src="/Notify.png" alt="notify" className="w-5 h-5" />,
+      icon: <IoMdNotificationsOutline className="text-2xl" />,
       label: "Turn On Notifications",
       msg: "On Notifications",
     },
     {
-      icon: <img src="/mute.png" alt="mute" className="w-5 h-5" />,
+      icon: <IoMdNotificationsOff className="text-2xl" />,
       label: "Mute the User",
       msg: "Mute the Creator",
     },
     {
-      icon: <img src="/CopyURL.png" alt="copy" className="w-5 h-5" />,
+      icon:<MdOutlineInsertLink className="text-2xl " />,
       label: "Copy Post Link URL",
       msg: "Link Copied",
     },
     {
-      icon: <img src="/user01.png" alt="view" className="w-5 h-5" />,
+      icon:<CgProfile className="text-2xl" />,
       label: "View Profile",
       msg: "View Creator Profile",
     },

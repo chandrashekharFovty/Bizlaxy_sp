@@ -6,27 +6,33 @@ import officialIcon from "/Official Icon.png";
 import SavePostBadge from "../ui/SavePostBadge";
 import PostPopover, { PostModal } from "./PostPopover";
 import { LuHeart } from "react-icons/lu";
-import { FaRegComment } from "react-icons/fa6";
+import { FaRegComment, FaThreads } from "react-icons/fa6";
 import { FiSend } from "react-icons/fi";
-import { FaHeart, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
+import { FaHeart, FaRegThumbsUp, FaThumbsUp, FaWhatsapp } from "react-icons/fa";
 import { HiDocument } from "react-icons/hi2";
 import { CgFileDocument } from "react-icons/cg";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Transition } from "@headlessui/react";
+import { BsChatDots } from "react-icons/bs";
+import { RiFacebookCircleLine } from "react-icons/ri";
+import { MdOutlineInsertLink } from "react-icons/md";
+import { PiCheckCircleFill } from "react-icons/pi";
 
 const images = ["/poster03.png", "/poster01.png", "/poster02.png"];
 interface CommentReply {
   replyId: number;
-  replyname:string;
+  replyname: string;
   replyText: string;
   likes: number;
+  isLiked?: boolean;
 }
 
 interface CommentItem {
   id: number;
-  name:string;
+  name: string;
   text: string;
   likes: number;
+  isLiked?: boolean;
   replies: CommentReply[];
 }
 
@@ -100,6 +106,14 @@ export function Post({
   const [openReplyIndex, setOpenReplyIndex] = useState<number | null>(null);
   const [commentInput, setCommentInput] = useState("");
   const [commentReplyInput, setCommentReplyInput] = useState("");
+    const [filteredUsers, setFilteredUsers] = useState([]);
+     const [selectedUsers, setSelectedUsers] = useState([]);
+  
+    
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+        setFilteredUsers(users.filter(user => user.name.toLowerCase().includes(e.target.value.toLowerCase())));
+      };
 
   const users = [
     { id: 1, name: "imkr", title: "Follows you", img: "/Hide.jpg" },
@@ -134,9 +148,9 @@ export function Post({
     { id: 10, name: "soktri", title: "Follows you", img: "/Hide.jpg" },
   ];
 
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredUsers = users.filter((user) =>
+  //   user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
   const handleShare = () => setIsShareOpen(true);
 
   const handleLike = () => {
@@ -161,7 +175,7 @@ export function Post({
                 ...item.comments,
                 {
                   id: Date.now(),
-                  name:"",
+                  name: "",
                   text: commentInput.trim(),
                   likes: 0,
                   replies: [],
@@ -189,7 +203,7 @@ export function Post({
                         ...c.replies,
                         {
                           replyId: Date.now(),
-                          replyname:"",
+                          replyname: "",
                           replyText: commentReplyInput.trim(),
                           likes: 0,
                         },
@@ -204,20 +218,6 @@ export function Post({
     setCommentReplyInput("");
     setOpenReplyIndex(null);
   };
-  //const handleComment = () => setShowComment((prev) => !prev);
-  // const handleShare = () => {
-  //   setShares((prev) => prev + 1);
-  //   setSharedUsers((prev) => [...prev, user.name]);
-  //   setShowShareUsers(true);
-  // };
-
-  // const handleCommentSend = () => {
-  //   if (commentText.trim() !== "") {
-  //     setPostComment((prev) => [...prev, commentText.trim()]);
-  //     setComment((prev) => prev + 1);
-  //     setCommentText("");
-  //   }
-  // };
 
   const handleDoubleClick = () => {
     const heart = heartRef.current;
@@ -265,6 +265,63 @@ export function Post({
     content.description.length > content.descpLimit
       ? content.description.slice(0, content.descpLimit)
       : content.description;
+
+  const toggleCommentLike = (mediaId: number, commentId: number) => {
+    setCommentList((prev) =>
+      prev.map((item) =>
+        item.id === mediaId
+          ? {
+              ...item,
+              comments: item.comments.map((comment) =>
+                comment.id === commentId
+                  ? {
+                      ...comment,
+                      isLiked: !comment.isLiked,
+                      likes: comment.isLiked
+                        ? comment.likes - 1
+                        : comment.likes + 1,
+                    }
+                  : comment
+              ),
+            }
+          : item
+      )
+    );
+  };
+
+  const toggleReplyLike = (
+    mediaId: number,
+    commentId: number,
+    replyId: number
+  ) => {
+    setCommentList((prev) =>
+      prev.map((item) =>
+        item.id === mediaId
+          ? {
+              ...item,
+              comments: item.comments.map((comment) =>
+                comment.id === commentId
+                  ? {
+                      ...comment,
+                      replies: comment.replies.map((reply) =>
+                        reply.replyId === replyId
+                          ? {
+                              ...reply,
+                              isLiked: !reply.isLiked,
+                              likes: reply.isLiked
+                                ? reply.likes - 1
+                                : reply.likes + 1,
+                            }
+                          : reply
+                      ),
+                    }
+                  : comment
+              ),
+            }
+          : item
+      )
+    );
+  };
 
   return (
     <>
@@ -363,19 +420,6 @@ export function Post({
         </div>
         <div className="flex justify-between text-xs font-medium mt-3">
           <div className=" max-md:gap-1 flex items-center gap-4">
-            {/* <div
-              onClick={handleLike}
-              className="flex items-center gap-1 cursor-pointer border border-gray-400 h-8 px-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-            >
-              {isLiked ? (
-                <FaHeart className="text-lg text-red-500" />
-              ) : (
-                <LuHeart className="text-lg text-gray-700 dark:text-white" />
-              )}
-              <span className={`text-sm ${isLiked ? "text-red-500" : ""}`}>
-                {likes}
-              </span>
-            </div> */}
             <div
               onClick={handleLike}
               className={`flex items-center gap-1 cursor-pointer border border-gray-400 h-8 px-3 rounded-full transition hover:bg-gray-100 dark:hover:bg-black ${
@@ -432,12 +476,6 @@ export function Post({
         commentList.map((media, idx) => {
           return (
             <>
-              {/* Moving pitch card when tray opens */}
-              {/* <div
-                className={`absolute inset-0 transition-transform duration-1000 ease-out ${
-                  openIndex === idx ? "-translate-x-80" : "translate-x-0"
-                }`}
-              /> */}
               {/* Comment tray */}
               <Transition
                 show={openIndex === idx}
@@ -467,7 +505,7 @@ export function Post({
                           placeholder="Add a comment..."
                           value={commentInput}
                           onChange={(e) => setCommentInput(e.target.value)}
-                          className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                          className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                         />
                         {commentInput.trim() && (
                           <FiSend
@@ -590,7 +628,7 @@ export function Post({
         })}
 
       {/* Share Dialog */}
-      <Dialog.Root open={isShareOpen} onOpenChange={setIsShareOpen}>
+      {/* <Dialog.Root open={isShareOpen} onOpenChange={setIsShareOpen}>
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black/40 z-40" />
           <Dialog.Content className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -607,7 +645,7 @@ export function Post({
               />
 
               <div className="space-y-2 max-h-[300px] scrollbar-hide overflow-y-auto">
-                {filteredUsers.length > 1 ? (
+                {filteredUsers.length > 0 ? (
                   filteredUsers.map((user) => (
                     <div
                       key={user.id}
@@ -643,7 +681,122 @@ export function Post({
             </div>
           </Dialog.Content>
         </Dialog.Portal>
-      </Dialog.Root>
+      </Dialog.Root> */}
+
+
+
+
+        {isShareOpen && (
+            <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
+              <div className="w-full max-w-md rounded-xl bg-white dark:bg-gray-800 dark:border dark:border-white p-6 relative">
+                {/* Close Button */}
+                <button
+                  onClick={() => setIsShareOpen(false)}
+                  className="absolute top-4 right-4 text-2xl text-black dark:text-white"
+                >
+                  ×
+                </button>
+          
+                <h2 className="text-lg text-center text-black dark:text-white font-bold mb-4">
+                  Share Eduvid To
+                </h2>
+          
+                {/* Search Input */}
+                <input
+                  type="text"
+                  placeholder="Search Users"
+                  // value={searchTerm}
+                  onChange={handleSearch}
+                  className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:text-white focus:outline-none"
+                />
+          
+                {/* Scrollable Horizontal Users */}
+                <div className="relative mb-4">
+             <div className="grid grid-cols-3 gap-4 overflow-y-auto max-h-72 pb-2 scrollbar-hide">
+                    {filteredUsers.map((user) => {
+                      const isSelected = selectedUsers.includes(user.id);
+                      return (
+                        <div
+                          key={user.id}
+                          onClick={() =>
+                            setSelectedUsers((prev) =>
+                              prev.includes(user.id)
+                                ? prev.filter((id) => id !== user.id)
+                                : [...prev, user.id]
+                            )
+                          }
+                          className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
+                            isSelected ? "bg-gray-200" : ""
+                          } cursor-pointer relative`}
+                        >
+                          <div className="relative w-16 h-16 mx-auto">
+                            <img
+                              src={user.img}
+                              alt={user.name}
+                              className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                            />
+                            {isSelected && (
+                              <PiCheckCircleFill className="absolute bottom-0 right-0 text-blue-600 text-lg bg-white rounded-full" />
+                            )}
+                          </div>
+                          <p className="mt-1 text-sm font-medium text-gray-800 dark:text-white">
+                            {user.name}
+                          </p>
+                          {user.verified && (
+                            <span className="text-blue-500 text-xs">✔</span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+          
+                {/* Conditional Message and Send OR Social Buttons */}
+                {selectedUsers.length > 0 ? (
+                  <div  className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:bg-gray-700 dark:text-white focus:outline-none"
+                   >
+                    {/* Message Field */}
+                    <input
+                      type="text"
+                      placeholder="Write a message..." 
+                  className="w-full h-full focus:outline-none text-black"
+          
+                      />
+          
+                    {/* Send Button */}
+                    <button
+                      onClick={() => {
+                        // your send logic here
+                        setIsShareOpen(false);
+                      }}
+                      className="w-full mt-4 py-2 rounded-full text-white font-semibold bg-blue-600"
+                    >
+                      Send
+                    </button>
+                  </div>
+                ) : (
+                  // Social Share Buttons
+                  <div className="flex justify-between mb-4">
+                    <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
+                      <MdOutlineInsertLink/>
+                    </button>
+                    <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
+                      <RiFacebookCircleLine/>
+                    </button>
+                    <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
+                      <BsChatDots />
+                    </button>
+                    <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
+                      <FaWhatsapp />
+                    </button>
+                    <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
+                      <FaThreads />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
     </>
   );
 }

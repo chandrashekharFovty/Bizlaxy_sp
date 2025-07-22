@@ -105,7 +105,7 @@ export default function AwarenessDialog() {
                 </Link>
 
                 {/* Options Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2  gap-6">
                   {campaignOptions.map((option) => (
                     <div
                       key={option.id}
@@ -136,7 +136,7 @@ export default function AwarenessDialog() {
 
               {/* Right Panel */}
               <div
-                className={`flex flex-col md:w-[350px]  dark:bg-white border-l border-gray-200 dark:border p-6 ml-6 rounded-xl ${
+                className={`flex flex-col md:w-[350px]  dark:bg-white border-l dark:border p-6 ml-6 rounded-xl ${
                   selected ? "opacity-100" : "opacity-0 pointer-events-none"
                 } transition-all duration-300`}
               >

@@ -237,3 +237,8 @@ sidebar-text::before {
 .border-gradient-buttons {
   @apply border-2 border-s-[#52EAEA] border-e-[#F36FFF] border-t-[#338AF3] border-b-[#1C4BC4] border-l-[#1cb7ff] border-r-[#b636e9];
 }
+
+
+.max-w-screen-xl{
+  max-width: 100%;
+}

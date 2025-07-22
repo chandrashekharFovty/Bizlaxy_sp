@@ -21,7 +21,7 @@ export default function SavePostBadge({
       fill={color}
       stroke={color}
       strokeWidth="2"
-      className="dark:stroke-white dark:fill-[#181818] fill-black cursor-pointer"
+      className="dark:stroke-white dark:fill-white fill-black cursor-pointer"
     >
       <path d="M6 4C5.447 4 5 4.447 5 5v15l7-6 7 6V5c0-.553-.447-1-1-1H6z" />
     </svg>
@@ -62,7 +62,7 @@ export function PostPopoverSaveBadge({
       fill={color}
       stroke={color}
       strokeWidth="2"
-      className="dark:stroke-black cursor-pointer"
+      className="dark:stroke-white dark:fill-white cursor-pointer"
     >
       <path d="M6 4C5.447 4 5 4.447 5 5v15l7-6 7 6V5c0-.553-.447-1-1-1H6z" />
     </svg>
@@ -75,7 +75,7 @@ export function PostPopoverSaveBadge({
       fill="none"
       stroke={color}
       strokeWidth="2"
-      className="dark:stroke-black cursor-pointer"
+      className="dark:stroke-white  cursor-pointer"
     >
       <path d="M6 4c-.553 0-1 .447-1 1v15l7-6 7 6V5c0-.553-.447-1-1-1H6z" />
     </svg>

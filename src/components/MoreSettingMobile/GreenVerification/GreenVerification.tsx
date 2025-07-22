@@ -623,38 +623,51 @@ export function ImportExport({ onBack }) {
         </button>
       </div>
 
-      {showPopup && (
-        <div className="dark:dark-color dark:rounded-xl dark:shadow-xl fixed bottom-0 left-0 right-0 bg-white p-4 border-t shadow-lg">
-          <Link
-            to="/greenidentity"
-            className="dark:dark-color text-blue-500 underline mb-2 inline-block"
-          >
-            Back to Profile
-          </Link>
-          <h1 className="dark:text-white text-lg font-semibold">Provide Your IEC Details</h1>
-          <p>
-            Enter your IEC number and optionally upload a copy of your
-            certificate.
-          </p>
-          <input
-            type="text"
-            placeholder="Enter your IEC number"
-            className="border p-2  dark:text-black rounded-xl my-2 w-full"
-          />
-          <input type="file" className="border p-2 my-2 w-full rounded-xl" />
-          <div className="flex gap-2 mt-2">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded">
-              Save
-            </button>
-            <button
-              onClick={() => setShowPopup(false)}
-              className="bg-gray-300 dark:text-black px-4 py-2 rounded"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
+     {showPopup && (
+  <>
+    {/* Overlay */}
+    <div className="fixed inset-0 bg-black bg-opacity-40 z-40"></div>
+
+    {/* Popup */}
+    <div className="fixed top-1/2 left-1/2 z-50 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-[90%] max-w-md">
+      <button
+      onClick={onBack}
+        // to="/greenidentity"
+        className="text-blue-500 underline mb-2 inline-block"
+      >
+        Back to Profile
+      </button>
+
+      <h1 className="text-lg font-semibold dark:text-white mb-1">
+        Provide Your IEC Details
+      </h1>
+
+      <p className="text-sm dark:text-gray-300 mb-4">
+        Enter your IEC number and optionally upload a copy of your certificate.
+      </p>
+
+      <input
+        type="text"
+        placeholder="Enter your IEC number"
+        className="border p-2 dark:text-black rounded-xl mb-3 w-full"
+      />
+      <input type="file" className="border p-2 mb-4 w-full rounded-xl" />
+
+      <div className="flex gap-2 justify-end">
+        <button className="bg-blue-500 text-white px-4 py-2 rounded">
+          Save
+        </button>
+        <button
+          onClick={() => setShowPopup(false)}
+          className="bg-gray-300 dark:text-black px-4 py-2 rounded"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </>
+)}
+
     </div>
   );
 }

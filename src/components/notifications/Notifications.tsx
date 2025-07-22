@@ -39,15 +39,19 @@ const notificationsToday = [
 const notificationsLastWeek = [...notificationsToday, ...notificationsToday];
 
 const NotificationItem = ({ img, name, action, time }) => (
-  <div className="dark:border dark:border-white dark:dark-color max-md:w-full w-11/12  flex items-center justify-between p-4 lg:border rounded-xl max-md:shadow-lg bg-white">
-    <div className=" flex items-center gap-3">
+  <div className="dark:border dark:border-white dark:dark-color max-md:w-full w-11/12 flex items-center justify-between p-4 lg:border rounded-xl max-md:shadow-lg bg-white">
+    <div className="flex items-center gap-3">
+      {/* Blue dot in front */}
+      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+
       <div className="relative">
         <img src={img} alt={name} className="w-10 h-10 rounded-full" />
-        <span className="absolute top-0 right-0 w-2 h-2 bg-blue-500 rounded-full"></span>
       </div>
+
       <p className="text-sm text-gray-700">
-        <span className="font-semibold dark:text-white">{name}</span><br/>
-       <span className="dark:text-gray-400">  {action}</span>
+        <span className="font-semibold dark:text-white">{name}</span>
+        <br />
+        <span className="dark:text-gray-400">{action}</span>
       </p>
     </div>
     <span className="text-xs text-gray-400">{time}</span>

@@ -9,12 +9,20 @@ import {
   FaExpand,
   FaRegComment,
   FaRegThumbsUp,
+  FaWhatsapp,
 } from "react-icons/fa";
 import { Ellipsis, ExpandIcon } from "lucide-react";
 import { Item } from "@radix-ui/react-accordion";
 import { FiSend } from "react-icons/fi";
 import { FollowButton, FollowButtonCard } from "../ui/FollowButton";
 import { IoMdMore } from "react-icons/io";
+import { PiCheckCircleFill } from "react-icons/pi";
+import { MdOutlineInsertLink } from "react-icons/md";
+import { RiFacebookCircleLine } from "react-icons/ri";
+import { BsChatDots } from "react-icons/bs";
+import { FaThreads, FaXTwitter } from "react-icons/fa6";
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import { HiMiniArrowTurnUpRight } from "react-icons/hi2";
 
 type Reply = {
   replyId: number;
@@ -138,6 +146,72 @@ export default function MainContent() {
   const [showMoreOptions, setShowMoreOptions] = useState(null);
   const [report, setReport] = useState(false);
   const [block, setBlock] = useState(false);
+    const [isShareOpen, setIsShareOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+   const [selectedUsers, setSelectedUsers] = useState([]);
+   const scrollRef = useRef(null);
+     const [isHovering, setIsHovering] = useState(false);
+     const [showLeftArrow, setShowLeftArrow] = useState(false);
+     const [showRightArrow, setShowRightArrow] = useState(true);
+   
+     // Update arrow visibility
+     const updateArrows = () => {
+       const el = scrollRef.current;
+       if (el) {
+         setShowLeftArrow(el.scrollLeft > 0);
+         setShowRightArrow(el.scrollLeft + el.clientWidth < el.scrollWidth);
+       }
+     };
+   
+     useEffect(() => {
+       const el = scrollRef.current;
+       if (!el) return;
+       updateArrows();
+       el.addEventListener("scroll", updateArrows);
+       return () => el.removeEventListener("scroll", updateArrows);
+     }, []);
+   
+   
+
+  
+  const handleSearch = (e) => {
+      setSearchTerm(e.target.value);
+      setFilteredUsers(users.filter(user => user.name.toLowerCase().includes(e.target.value.toLowerCase())));
+    };
+    const users = [
+    { id: 1, name: "imkr", title: "Follows you", img: "/Hide.jpg" },
+    {
+      id: 2,
+      name: "organic__ai",
+      title: "Followed by xhingg_singh07",
+      img: "/Hide1.jpg",
+    },
+    {
+      id: 3,
+      name: "im_gr",
+      title: "Followed by xhingg_singh07",
+      img: "/Hide2.jpg",
+    },
+    { id: 4, name: "abhi52", title: "Follows you", img: "/Hide3.jpg" },
+    { id: 5, name: "soktri", title: "Follows you", img: "/Hide.jpg" },
+    { id: 6, name: "imkr", title: "Follows you", img: "/Hide.jpg" },
+    {
+      id: 7,
+      name: "organic__ai",
+      title: "Followed by xhingg_singh07",
+      img: "/Hide1.jpg",
+    },
+    {
+      id: 8,
+      name: "im_gr",
+      title: "Followed by xhingg_singh07",
+      img: "/Hide2.jpg",
+    },
+    { id: 9, name: "abhi52", title: "Follows you", img: "/Hide3.jpg" },
+    { id: 10, name: "soktri", title: "Follows you", img: "/Hide.jpg" },
+  ];
+
 
   const toggleLike = (id) => {
     setMediaList((prev) =>
@@ -374,9 +448,10 @@ export default function MainContent() {
        >
       <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
        {liked ? (
-         <img src="/LikePitch.png" alt="Like" className="w-5 h-5" />
+          <FaThumbsUp className="w-5 h-5 text-white" />
+       
        ) : (
-         <FaThumbsUp className="w-5 h-5 text-white" />
+         <img src="/LikePitch.png" alt="Like" className="w-5 h-5" />
        )}
      </div>
      
@@ -404,21 +479,19 @@ export default function MainContent() {
      
        {/* SHARE BUTTON */}
        <div
-         onClick={() => alert("Share dialog opens here")}
+          onClick={() => setIsShareOpen(true)}
          className="cursor-pointer flex flex-col items-center"
        >
-         <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
+           <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
            <img
              src="/SendPitch.png"
              alt="Share"
              className="w-5 h-5"
            />
-         </div>
-         <p className="text-center text-sm text-white">
-           {formatNumber(media.shares)}
-         </p>
+
        </div>
-     
+       
+      </div>
        {/* MORE OPTIONS BUTTON */}
        <div
          onClick={() => setShowMoreOptions(idx)}
@@ -618,6 +691,160 @@ export default function MainContent() {
                 </button>
               </Dialog.Panel>
             </Dialog>
+
+
+
+
+
+    {isShareOpen && (
+      <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
+        <div className="w-full max-w-md rounded-xl bg-white dark:bg-gray-800 dark:border dark:border-white p-6 relative">
+          {/* Close Button */}
+          <button
+            onClick={() => setIsShareOpen(false)}
+            className="absolute top-4 right-4 text-2xl text-black dark:text-white"
+          >
+            ×
+          </button>
+    
+          <h2 className="text-lg text-center text-black dark:text-white font-bold mb-4">
+            Share Eduvid To
+          </h2>
+    
+          {/* Search Input */}
+          <input
+            type="text"
+            placeholder="Search Users"
+            // value={searchTerm}
+            onChange={handleSearch}
+            className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:text-white focus:outline-none"
+          />
+    
+          {/* Scrollable Horizontal Users */}
+          <div className="relative mb-4">
+       <div className="grid grid-cols-3 gap-4 overflow-y-auto max-h-72 pb-2 scrollbar-hide">
+              {filteredUsers.map((user) => {
+                const isSelected = selectedUsers.includes(user.id);
+                return (
+                  <div
+                    key={user.id}
+                    onClick={() =>
+                      setSelectedUsers((prev) =>
+                        prev.includes(user.id)
+                          ? prev.filter((id) => id !== user.id)
+                          : [...prev, user.id]
+                      )
+                    }
+                    className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
+                      isSelected ? "bg-gray-200" : ""
+                    } cursor-pointer relative`}
+                  >
+                    <div className="relative w-16 h-16 mx-auto">
+                      <img
+                        src={user.img}
+                        alt={user.name}
+                        className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                      />
+                      {isSelected && (
+                        <PiCheckCircleFill className="absolute bottom-0 right-0 text-blue-600 text-lg bg-white rounded-full" />
+                      )}
+                    </div>
+                    <p className="mt-1 text-sm font-medium text-gray-800 dark:text-white">
+                      {user.name}
+                    </p>
+                    {user.verified && (
+                      <span className="text-blue-500 text-xs">✔</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+    
+          {/* Conditional Message and Send OR Social Buttons */}
+          {selectedUsers.length > 0 ? (
+            <div  className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:bg-gray-700 dark:text-white focus:outline-none"
+             >
+              {/* Message Field */}
+              <input
+                type="text"
+                placeholder="Write a message..." 
+            className="w-full h-full focus:outline-none text-black"
+    
+                />
+    
+              {/* Send Button */}
+              <button
+                onClick={() => {
+                  // your send logic here
+                  setIsShareOpen(false);
+                }}
+                className="w-full mt-4 py-2 rounded-full text-white font-semibold bg-blue-600"
+              >
+                Send
+              </button>
+            </div>
+          ) : (
+            // Social Share Buttons
+         <div
+              className="relative mt-4"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+            >
+              {/* Scrollable Social Buttons */}
+              <div
+                ref={scrollRef}
+                className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
+              >
+                {[
+                  { icon: <MdOutlineInsertLink />, label: "Copy Link" },
+                  { icon: <RiFacebookCircleLine />, label: "Facebook" },
+                  { icon: <BsChatDots />, label: "Messenger" },
+                  { icon: <FaWhatsapp />, label: "WhatsApp" },
+                  { icon: <FaThreads />, label: "Threads" },
+                  { icon: <FaXTwitter/>, label: "X" },
+                  { icon: <HiMiniArrowTurnUpRight/>, label: "More" },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-col items-center text-center flex-shrink-0 w-16"
+                  >
+                    <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
+                      {item.icon}
+                    </button>
+                    <span className="pt-1 text-black text-xs">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+        
+              {/* Left Arrow */}
+              {isHovering && showLeftArrow && (
+                <button
+                  onClick={() =>
+                    scrollRef.current.scrollBy({ left: -250, behavior: "smooth" })
+                  }
+                  className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+                >
+                  <SlArrowLeft/>
+                </button>
+              )}
+        
+              {/* Right Arrow */}
+              {isHovering && showRightArrow && (
+                <button
+                  onClick={() =>
+                    scrollRef.current.scrollBy({ left: 200, behavior: "smooth" })
+                  }
+                  className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+                >
+                  <SlArrowRight />
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    )}
           </div>
         );
       })}

@@ -8,6 +8,13 @@ import {
 } from "lucide-react";
 import StoryPopover from "./StoryPopover";
 import { TbPlayerPlay, TbPlayerPause } from "react-icons/tb";
+import { FaThreads, FaXTwitter } from "react-icons/fa6";
+import { FaWhatsapp } from "react-icons/fa";
+import { BsChatDots } from "react-icons/bs";
+import { RiFacebookCircleLine } from "react-icons/ri";
+import { MdOutlineInsertLink } from "react-icons/md";
+import { HiMiniArrowTurnUpRight } from "react-icons/hi2";
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 export interface MediaItem {
   type: "image" | "video";
@@ -44,6 +51,28 @@ const StoryModal: React.FC<Props> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [paused, setPaused] = useState(false);
   const [message, setMessage] = useState("");
+ const scrollRef = useRef(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  // Update arrow visibility
+  const updateArrows = () => {
+    const el = scrollRef.current;
+    if (el) {
+      setShowLeftArrow(el.scrollLeft > 0);
+      setShowRightArrow(el.scrollLeft + el.clientWidth < el.scrollWidth);
+    }
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    updateArrows();
+    el.addEventListener("scroll", updateArrows);
+    return () => el.removeEventListener("scroll", updateArrows);
+  }, []);
+
 
   const elapsedSoFar = useRef(0);
   const lastStartTime = useRef<number | null>(null);
@@ -149,7 +178,7 @@ const StoryModal: React.FC<Props> = ({
     return () => window.removeEventListener("keydown", handleKey);
   }, [currentIndex, media]);
 
-  // ✅✅✅ Added: handleShareSend
+  // Added: handleShareSend
   const handleShareSend = () => {
     console.log("Sending to:", selectedUsers);
     // Your real send logic goes here
@@ -216,7 +245,7 @@ const StoryModal: React.FC<Props> = ({
 
           {/* Media with tap and hold */}
           <div
-            className="flex-1 relative flex items-center justify-center overflow-hidden mb-4"
+            className="flex-1 relative flex items-center justify-center overflow-hidden "
             onMouseDown={handleHoldStart}
             onMouseUp={handleHoldEnd}
             onTouchStart={handleHoldStart}
@@ -383,16 +412,75 @@ const StoryModal: React.FC<Props> = ({
               ))}
             </ul>
 
-            {selectedUsers.length > 0 && (
-              <div className="w-full px-4 py-4 border-t">
-                <button
-                  onClick={handleShareSend} //  here
-                  className="w-full h-12 bg-blue-800 text-white text-center rounded-xl"
-                >
-                  Send
-                </button>
-              </div>
-            )}
+    
+ {selectedUsers.length > 0 ? (
+  <div className="w-full px-4 py-4 border-t">
+    <button
+      onClick={handleShareSend}
+      className="w-full h-12 bg-blue-800 text-white text-center rounded-xl"
+    >
+      Send
+    </button>
+  </div>
+) : (
+ <div
+      className="relative mt-4"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
+      {/* Scrollable Social Buttons */}
+      <div
+        ref={scrollRef}
+        className="overflow-x-auto scrollbar-hide flex space-x-6 px-2"
+      >
+        {[
+          { icon: <MdOutlineInsertLink />, label: "Copy Link" },
+          { icon: <RiFacebookCircleLine />, label: "Facebook" },
+          { icon: <BsChatDots />, label: "Messenger" },
+          { icon: <FaWhatsapp />, label: "WhatsApp" },
+          { icon: <FaThreads />, label: "Threads" },
+          { icon: <FaXTwitter />, label: "X" },
+          { icon: <HiMiniArrowTurnUpRight />, label: "More" },
+        ].map((item, idx) => (
+          <div
+            key={idx}
+            className="flex flex-col items-center text-center flex-shrink-0 w-16"
+          >
+            <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
+              {item.icon}
+            </button>
+            <span className="pt-1 text-xs">{item.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Left Arrow */}
+      {isHovering && showLeftArrow && (
+        <button
+          onClick={() =>
+            scrollRef.current.scrollBy({ left: -200, behavior: "smooth" })
+          }
+          className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+        >
+          <SlArrowLeft/>
+        </button>
+      )}
+
+      {/* Right Arrow */}
+      {isHovering && showRightArrow && (
+        <button
+          onClick={() =>
+            scrollRef.current.scrollBy({ left: 200, behavior: "smooth" })
+          }
+          className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+        >
+          <SlArrowRight />
+        </button>
+      )}
+    </div>
+)}
+
+
           </div>
         </>
       )}

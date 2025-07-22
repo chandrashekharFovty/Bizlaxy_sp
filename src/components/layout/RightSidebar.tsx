@@ -386,9 +386,11 @@ useEffect(() => {
         // onMouseLeave={handleMouseLeave}
         // onMouseUp={handleMouseUp}
         // onMouseMove={handleMouseMove}
-        className={`flex w-full h-[190px] items-stretch gap-[9px] overflow-x-auto scrollbar-hide mt-4 ${
-          isDragging ? "cursor-grabbing" : "cursor-grab"
-        }`}
+        className={"flex w-full h-[190px] items-stretch gap-[9px] overflow-x-auto scrollbar-hide mt-4" 
+        //   ${
+        //   isDragging ? "cursor-grabbing" : "cursor-grab"
+        // }`
+        }
       >
      {recommended.map((profile) => (
         <div

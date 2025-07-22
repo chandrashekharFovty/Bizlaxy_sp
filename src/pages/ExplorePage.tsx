@@ -110,6 +110,105 @@ const ExplorePage: React.FC = () => {
       id: "15",
       imageUrl:
      "/Explore15.png",  },
+    {
+      id: "16",
+      comments: 10,
+      likes: 20,
+      imageUrl:
+        "/Explore1.png",
+    },
+    {
+      comments: 10,
+      likes: 20,
+      id: "17",
+      imageUrl:
+        "/Explore2.png",
+    },
+    {
+      comments: 10,
+      likes: 20,
+      id: "18",
+      imageUrl:
+       "/Explore3.png",
+    },
+    {
+      comments: 10,
+      likes: 20,
+      id: "19",
+      imageUrl:
+       "/Explore4.png",
+    },
+    {
+      comments: 10,
+      likes: 20,
+      id: "20",
+      imageUrl:
+      "/Explore5.png",
+    },
+    {
+      comments: 10,
+      likes: 20,
+      id: "21",
+      imageUrl:
+        "/Explore6.png",
+    },
+    {
+      comments: 10,
+      likes: 20,
+      id: "22",
+      imageUrl:
+      "/Explore7.png",  
+    },
+    {
+      comments: 10,
+      likes: 20,
+      id: "23",
+      imageUrl:
+     "/Explore8.png",   },
+  
+    {
+      comments: 10,
+      likes: 20,
+      id: "24",
+      imageUrl:
+      "/Explore9.png",   },
+    {
+      comments: 10,
+      likes: 20,
+      id: "25",
+      imageUrl:
+     "/Explore10.png",  },
+      {
+      comments: 10,
+      likes: 20,
+      id: "26",
+      imageUrl:
+     "/Explore10.png",  },
+      {
+      comments: 10,
+      likes: 20,
+      id: "27",
+      imageUrl:
+     "/Explore12.png",  
+    },
+      {
+      comments: 10,
+      likes: 20,
+      id: "28",
+      imageUrl:
+     "/Explore13.png",  },
+      {
+      comments: 10,
+      likes: 20,
+      id: "29",
+      imageUrl:
+     "/Explore14.png",  },
+      {
+      comments: 10,
+      likes: 20,
+      id: "30",
+      imageUrl:
+     "/Explore15.png",  },
   ];
 
 const [recentUsers,setRecentUsers]=useState( [
@@ -213,7 +312,6 @@ const [recentUsers,setRecentUsers]=useState( [
     }}
   />
 )}
-
           </div>
         </div>
       </div>
@@ -319,6 +417,4 @@ return (
     </div>
   );
 }
-
-
 export default ExplorePage;

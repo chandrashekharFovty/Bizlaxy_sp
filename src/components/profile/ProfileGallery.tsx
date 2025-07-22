@@ -16,7 +16,7 @@ interface ProfileGalleryProps {
 
 const ProfileGallery: React.FC<ProfileGalleryProps> = ({ items, onItemClick }) => {
   return (
-    <div className="grid grid-cols-3 md:grid-cols-4  [grid-auto-rows:-10px] dark:dark-color">
+    <div className="grid grid-cols-3 md:grid-cols-4  [grid-auto-rows:] [grid-auto-cols:25px] dark:dark-color">
       {items.map((item) => (
         <div
           key={item.id}
@@ -31,8 +31,8 @@ const ProfileGallery: React.FC<ProfileGalleryProps> = ({ items, onItemClick }) =
           />
 
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-3 text-white opacity-10 group-hover:opacity-100 transition">
-  <div className="flex gap-3  rounded px-2 py-1">
-    <div className="flex items-center gap-1">
+  <div className="flex gap-3  rounded px-2 py-1 bg-black/40">
+    <div className="flex items-center gap-1 ">
       <Heart size={18} />
       <span className="text-sm">{item.likes}</span>
     </div>

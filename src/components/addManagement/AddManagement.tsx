@@ -224,7 +224,7 @@ const Dashboard = () => {
   const togglePopup = () => setShowPopup(!showPopup);
 
   return (
-    <div className="dark:dark-color p-6 bg-gray-50 min-h-screen   relative">
+    <div className="dark:dark-color p-6 bg-gray-50 min-h-screen  w-full  relative">
       {/* Header */}
     <div
   className="w-[220px] h-[48px] relative"
@@ -426,7 +426,7 @@ const Dashboard = () => {
           } rounded-2xl p-8 shadow-xl max-h-[90vh] overflow-y-auto relative flex gap-6 transition-all duration-300`}
         >
           {/* Left: Campaign Cards */}
-          <div className="grid grid-cols-2 gap-6 overflow-y-auto max-md:h-[400px] scrollbar-hide">
+          <div className="grid grid-cols-2 gap-6 overflow-y-auto max-md:h-[400px] ">
             {campaignOptions.map((item) => (
               <div
                 key={item.id}
@@ -452,7 +452,7 @@ const Dashboard = () => {
 
           {/* Right: Details Panel */}
           <div
-            className={`flex flex-col max-w-md bg-white   border rounded-2xl ${
+            className={`flex flex-col max-w-md bg-white rounded-2xl ${
               selected
                 ? "translate-x-0 opacity-100"
                 : "translate-x-full opacity-0 pointer-events-none"
@@ -592,37 +592,44 @@ const Dashboard = () => {
             img: <img src={userGroup} alt="" className="w-8 h-8" />,
           },
           {
-            title: "Revenue",
-            value: "₹279,307.50",
+            title: "Impressions",
+            value: "₹1,56,557",
             change: "-0.10%",
             changeColor: "text-red-500",
             img: <img src={handRupee} alt="" className="w-8 h-8" />,
           },
           {
-            title: "Profit",
-            value: "60%",
+            title: "Total Spend",
+            value: "₹279,307.50",
             change: "-0.2%",
             changeColor: "text-red-500",
             img: <img src={rupeeBag} alt="" className="w-8 h-8" />,
           },
         ].map((card, i) => (
-          <div
-            key={i}
-            className="dark:dark-color dark:border dark:border-white dark:rounded-xl w-[360px] h-[159px] gap-2 max-md:w-full bg-white p-4 rounded-xl shadow"
-          >
-            <div className="w-[339px] h-[120px]">
-              <div className="flex justify-between items-center mb-2">
-                <h4 className="dark:text-white text-sm text-gray-600">{card.title}</h4>
-                <span className="w-[70px] h-[70px] bg-gray-100 p-5 rounded-full">
-                  {card.img}
-                </span>
-              </div>
-              <h2 className="text-2xl font-bold">{card.value}</h2>
-              <p className={`text-xs mt-1 ${card.changeColor}`}>
-                {card.change} Since last week
-              </p>
-            </div>
-          </div>
+       <div
+  key={i}
+  className="
+    dark:dark-color dark:border dark:border-white dark:rounded-xl
+    bg-white shadow rounded-xl
+    w-full max-w-[400px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[700px] xl:max-w-[800px] 2xl:max-w-[900px]
+    h-auto p-4 sm:p-5 md:p-6 lg:p-4
+    gap-6
+  "
+>
+  <div className="w-full h-full">
+    <div className="flex justify-between items-center mb-2">
+      <h4 className="dark:text-white text-sm text-gray-600">{card.title}</h4>
+      <span className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gray-100 p-3 sm:p-4 md:p-5 rounded-full flex items-center justify-center">
+        {card.img}
+      </span>
+    </div>
+    <h2 className="text-xl sm:text-2xl md:text-xl font-bold">{card.value}</h2>
+    <p className={`text-xs sm:text-sm mt-1 ${card.changeColor}`}>
+      {card.change} Since last week
+    </p>
+  </div>
+</div>
+
         ))}
       </div>
 

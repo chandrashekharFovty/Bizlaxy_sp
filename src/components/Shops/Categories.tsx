@@ -44,12 +44,12 @@ const Category = () => {
 
   const navigate=useNavigate()
   return (
-    <div className="flex dark:dark-color">
+    <div className="flex w-full dark:dark-color">
       {/* Sidebar */}
       <Sidebar />
 
       {/* Main Content */}
-      <div className="w-full max-w-screen-xl mx-auto max-lg:ml-20 ml-[240px] max-md:ml-0 p-4 dark:dark-color">
+      <div className="w-screen max-w-screen-xl mx-auto max-lg:ml-20 ml-[240px] max-md:ml-0 p-4 dark:dark-color">
       {/* Top Bar */}
 <div className="flex items-center justify-between px-4  ">
   {/* Left Section: Back + Search */}
@@ -60,7 +60,7 @@ const Category = () => {
     </Link>
 
     {/* Search Container */}
-    <div className="flex items-center flex-grow border border-gray-300 rounded-xl px-3 py-2">
+    <div className="flex w-full items-center flex-grow border border-gray-300 rounded-xl px-3 py-2">
       <SearchIcon className="w-4 h-4 text-gray-500 mr-2" />
       <input
         type="text"
@@ -100,7 +100,7 @@ const Category = () => {
 
 
         {/* Carousel Banner */}
-        <div className="m-6 max-md:h-[250px] max-md:mb-0">
+        <div className="m-6 w-full max-md:h-[250px] max-md:mb-0">
           <ShopCarousel />
         </div>
 
